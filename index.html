@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="zh-Hans"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>无 root 手机上的 Android 沙箱实测</title>
+<meta name="description" content="用 AOSP 源码 + 本机实测，讲清一台不 root 的 Android 手机上的三层沙箱：execve/entrypoint、zygote 身份、init socket 权限。">
+<style>
+:root{--fg:#1a1a1a;--bg:#fff;--muted:#666;--line:#e5e5e5;--code:#f6f6f6;--accent:#0b6bcb}
+@media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#121212;--muted:#9a9a9a;--line:#2a2a2a;--code:#1d1d1d;--accent:#6cb6ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,"PingFang SC","Noto Sans CJK SC",Roboto,sans-serif;padding:0 16px 64px}
+main{max-width:820px;margin:0 auto}
+header{padding:36px 0 12px;border-bottom:1px solid var(--line);margin-bottom:24px}
+h1{font-size:1.65rem;line-height:1.3;margin:.2em 0 .3em}
+h2{font-size:1.3rem;margin:2em 0 .6em;padding-top:.4em;border-top:1px solid var(--line)}
+h3{font-size:1.08rem;margin:1.4em 0 .4em}
+p,li{color:var(--fg)}
+.sub{color:var(--muted);font-size:.94rem;margin:0}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+nav a{font-size:.86rem;text-decoration:none;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+a{color:var(--accent)}
+code{background:var(--code);padding:.12em .35em;border-radius:4px;font-size:.88em;word-break:break-all}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border:1px solid var(--line)}
+pre code{background:none;padding:0;font-size:.85rem;line-height:1.55;word-break:normal}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.9rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--code);font-weight:600}
+blockquote{margin:1em 0;padding:.4em 0 .4em 14px;border-left:3px solid var(--accent);color:var(--muted)}
+blockquote p{margin:.3em 0;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--line);margin:2.4em 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+.tag{display:inline-block;font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 7px;margin-right:6px}
+</style>
+</head><body><main>
+<header>
+<h1>无 root 手机上的 Android 沙箱实测</h1>
+<p class="sub">三层：SELinux entrypoint（能不能执行）· zygote 一次 fork 定死的身份（你是谁）· init 发出的 socket 权限（能跟谁说话）</p>
+<p class="sub" style="margin-top:10px"><span class="tag">荣耀 Magic8 RSR（BKQ-AN20）</span><span class="tag">Android 17 / SDK 37</span><span class="tag">aarch64</span><span class="tag">无 root · Shizuku shell</span><span class="tag">2026-11-06</span></p>
+<nav>
+<a href="#s0">摘要</a><a href="#s1">沙箱实测</a><a href="#s2">linker64 机制</a><a href="#s3">zygote 身份</a><a href="#s4">源码怎么拿到手机上</a>
+</nav>
+</header>
+
+<section id="s0"><h2>摘要</h2>
+<p>一台不 root 的 Android 手机，一个普通 App 到底能跑什么、不能跑什么？答案不在编译器、也不在文件权限，而在三件事：<strong>它的文件落在哪个 SELinux 类型</strong>、<strong>它是被谁 fork 出来的（哪些 MLS 类别）</strong>、以及 <strong>它能不能碰到系统 socket</strong>。</p>
+<p>本文所有结论都有两处证据：AOSP 源码（bionic / system/core / frameworks/base 快照）里的具体行号，以及这台手机上的实测输出（错误码、SELinux 上下文、<code>/proc</code> 状态）。文中标注了源码快照（≈Android 15/16）与本机（Android 17）的差异。</p>
+<table><thead><tr><th>能力</th><th>结果</th><th>原因</th></tr></thead><tbody>
+<tr><td>跑自己目录里的 ET_DYN 动态二进制</td><td>✅</td><td>SELinux 拦 execve，不拦 mmap</td></tr>
+<tr><td>跑静态 / ET_EXEC 二进制</td><td>❌</td><td>bionic linker 只收 ET_DYN</td></tr>
+<tr><td>fork/exec 子进程（git 的 https helper、pip…）</td><td>❌</td><td>子进程 execve 撞 <code>app_data_file</code> 的 entrypoint</td></tr>
+<tr><td>读别的 App 数据 / 系统 sealed 文件</td><td>❌</td><td>类型 + MLS 类别</td></tr>
+<tr><td>连系统 socket（zygote、property_service…）</td><td>❌</td><td>660 root:system + socket 标签 + peer cred</td></tr>
+<tr><td>借 Shizuku 以 shell 身份跑原生程序</td><td>✅</td><td>shell 域对 <code>shell_data_file</code> 有 entrypoint</td></tr>
+</tbody></table>
+</section>
+
+<section id="s1"><h2>一 · 沙箱实测</h2>
+<blockquote>
+<p>设备：荣耀 Magic8 RSR 保时捷设计（BKQ-AN20，SM8850），Android 17 / SDK 37，kernel 6.12.58，aarch64
+身份：普通 App，uid 10104，targetSdk 34；辅助身份：Shizuku 提供的 shell（uid 2000）
+方法：AOSP 源码（frameworks/base、system/core、bionic 快照）+ 本机实测，两边对齐</p>
+</blockquote>
+<p>三层的沙箱把答案写死了：<strong>SELinux entrypoint（能不能执行）、zygote 一次 fork 定死的身份（你是谁）、
+init 发出去的 socket 权限模型（能跟谁说话）</strong>。</p>
+<hr>
+<h2>第一层｜execve 被拒，但 linker64 能跑</h2>
+<h3>排除法：不是文件属性，也不是挂载</h3>
+<table>
+<thead>
+<tr>
+<th>检查</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>私有 ELF 权限</td>
+<td><code>-rwxr-xr-x</code>，属主就是自己</td>
+</tr>
+<tr>
+<td><code>/data</code> 挂载</td>
+<td><code>f2fs rw,seclabel,nosuid,nodev</code> —— 没有 <code>noexec</code></td>
+</tr>
+<tr>
+<td>直接执行</td>
+<td><code>Permission denied</code>（EACCES）</td>
+</tr>
+</tbody></table>
+<h3>真正的原因：SELinux <code>file:entrypoint</code></h3>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>SELinux 类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/system/bin/linker64</code></td>
+<td><code>system_linker_exec</code>（专门的类型）</td>
+</tr>
+<tr>
+<td><code>/system/bin/sh</code></td>
+<td><code>shell_exec</code></td>
+</tr>
+<tr>
+<td>App 私有目录、<code>libdshnode.so</code></td>
+<td><code>app_data_file</code></td>
+</tr>
+</tbody></table>
+<p>App 对前两种类型有 <code>entrypoint</code> 权限，对 <code>app_data_file</code> 没有 → execve 直接被内核拒绝。</p>
+<h3>为什么 <code>linker64 &lt;file&gt;</code> 可以：加载 ≠ 执行</h3>
+<p>bionic 的 linker 本来就是&quot;解释器&quot;角色，它支持的用法里明确写了直接跑：</p>
+<ul>
+<li><code>bionic/linker/linker_main.cpp:790-823</code><pre><code class="language-cpp">// When the linker is run directly rather than acting as PT_INTERP, parse
+// arguments and determine the executable to load. ...
+exe_to_load = args.argv[1];
+</code></pre>
+官方 usage：<em>&quot;This program can also be run directly to load and run a dynamic executable.&quot;</em></li>
+<li>它用 <code>mmap</code> + <code>mprotect(PROT_EXEC)</code> 把我们的文件映射进来（<code>linker_phdr.cpp:597-705</code>），走的是
+<code>file:execute</code>——和 App 加载自己的 <code>.so</code> 是同一条权限路径，不触发 entrypoint 检查。</li>
+</ul>
+<h3>代价：只能跑 ET_DYN（PIE）</h3>
+<p><code>bionic/linker/linker_phdr.cpp:292-294</code>：</p>
+<pre><code class="language-cpp">if (header_.e_type != ET_DYN) {
+  DL_ERR(&quot;\&quot;%s\&quot; has unexpected e_type: %d&quot;, ...);
+</code></pre>
+<p>实测 <code>linker64 librg.so</code>（ET_EXEC 全静态）→ <code>has unexpected e_type: 2</code>，与源码逐字对上。</p>
+<h3>依赖库要自己给路径</h3>
+<pre><code>linker64 jq            → CANNOT LINK EXECUTABLE: library &quot;libjq.so&quot; not found
+LD_LIBRARY_PATH=... bin → jq-1.8.2
+</code></pre>
+<p>（同理，<code>libdshnode.so</code> 靠编译期 <code>RPATH=$ORIGIN</code> 找到 82 MB 的 <code>libnode.so</code>。）</p>
+<p><strong>推论</strong>：任何需要 fork/exec 子进程的工具（git 的 <code>git-remote-https</code>、pip、多进程 CLI）在 App 身份下
+<strong>结构性不可行</strong>，因为子进程的 execve 会再撞一次 <code>app_data_file</code> 的 entrypoint 限制。</p>
+<hr>
+<h2>第二层｜App 的沙箱身份是 fork 时一次定死的</h2>
+<h3>源码链路</h3>
+<ol>
+<li><code>system/core/rootdir/init.zygote64.rc:1</code>：
+<code>service zygote /system/bin/app_process64 --zygote ...</code>，<code>socket zygote stream 660 root system</code>
+—— 此刻是 <strong>root + <code>zygote</code> 域</strong>（本机实测：<code>zygote64</code> PID 4337，user=root，label=<code>u:r:zygote:s0</code>）。</li>
+<li><code>frameworks/base/cmds/app_process/app_main.cpp:79</code> → <code>ZygoteInit</code> → 每个 App 由 <code>forkAndSpecialize()</code> 生出。</li>
+<li><code>frameworks/base/core/jni/com_android_internal_os_Zygote.cpp</code> 里依次做完：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>行号</th>
+<th>动作</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>552</td>
+<td><code>setgroups(...)</code></td>
+<td>附加组</td>
+</tr>
+<tr>
+<td>2010</td>
+<td><code>SetUpSeccompFilter(uid, …)</code></td>
+<td>装 seccomp 过滤器</td>
+</tr>
+<tr>
+<td>2001 / 2015</td>
+<td><code>setresgid</code> / <code>setresuid</code></td>
+<td>换成 App 的 uid</td>
+</tr>
+<tr>
+<td>2133</td>
+<td><code>selinux_android_setcontext(uid, is_system_server, se_info, name)</code></td>
+<td>切 SELinux 域</td>
+</tr>
+</tbody></table>
+<h3>域从哪来（本机文件，一手）</h3>
+<p><code>/system/etc/selinux/plat_seapp_contexts:41</code>（App 读不到，<code>adb_shell</code> 能读）：</p>
+<pre><code>user=_app minTargetSdkVersion=34 domain=untrusted_app_34 type=app_data_file levelFrom=all
+</code></pre>
+<p>我们的进程 <code>/proc/self/attr/current</code> = <code>u:r:untrusted_app_34:s0:c104,c256,c512,c768</code>：</p>
+<ul>
+<li><code>minTargetSdkVersion=34</code> 命中（本 App targetSdk 34）</li>
+<li><code>type=app_data_file</code> —— 就是第一层 execve 被拒用的类型</li>
+<li><code>levelFrom=all</code> 生成 <code>c104,c256,c512,c768</code> 这串 MLS 类别：同 App 的文件只有同类别能读，是隔离的另一半</li>
+</ul>
+<h3>seccomp 在，但不是拦路的那位</h3>
+<p><code>/proc/self/status</code>：<code>Seccomp: 2</code>、<code>Seccomp_filters: 1</code>（过滤器已生效）。
+但 exec 返回的是 <strong>EACCES（SELinux）</strong>，不是 seccomp 的 EPERM —— 两者可以据此区分。</p>
+<h3>一处处&quot;文档对不上本机&quot;</h3>
+<p>A15 源码里策略来自文本文件 <code>/system/etc/seccomp_policy/app.arm64.policy</code>；
+<strong>Android 17 上该文件不存在</strong>，实际提供者是 <code>/system/lib64/libseccomp_policy.so</code>（36 KB，
+导出符号 <code>set_app_seccomp_filter</code>）——策略从文件搬进了 so。</p>
+<hr>
+<h2>第三层｜socket 权限模型：谁能和谁说话</h2>
+<h3>init 发 socket 时定了三件事</h3>
+<p><code>system/core/init/util.cpp:95 CreateSocket(name, type, passcred, listen, perm, uid, gid, socketcon)</code>：</p>
+<ol>
+<li><code>setsockcreatecon(socketcon)</code> —— 创建时就指定 socket 的 SELinux 标签；</li>
+<li><code>SelabelLookupFileContext</code> + <code>setfscreatecon</code> —— 按 <code>file_contexts</code> 给 socket 节点打标签；</li>
+<li><code>SO_PASSCRED</code> —— 接收端可拿到对端 uid/gid/pid（<code>SCM_CREDENTIALS</code>），用于身份核对。
+调用方 <code>init/service_utils.cpp:199</code> 把 <code>.rc</code> 里的 <code>perm/uid/gid</code> 传进去。</li>
+</ol>
+<h3>本机实测</h3>
+<ul>
+<li><code>.rc</code>：<code>socket zygote stream 660 root system</code>（另有 <code>zygote_next seqpacket 660 root system</code>）</li>
+<li><code>/system/etc/selinux/plat_file_contexts</code>：<code>/dev/socket/zygote u:object_r:zygote_socket:s0</code></li>
+<li><code>/proc/net/unix</code> 里确有 <code>/dev/socket/zygote</code></li>
+<li><strong>代价是连 stat 都不给</strong>：<code>ls -l /dev/socket</code> 列出 59 个条目，socket 文件那一批全是
+<code>s?????????</code>（stat 被拒）；App 或 shell 直接 <code>ls -l /dev/socket/zygote</code> → <code>Permission denied</code></li>
+</ul>
+<p>所以一个普通 App 想&quot;假装&quot;和 zygote/servicemanager 通信，会在<strong>权限位、SELinux 标签、peer cred</strong>
+三关里任一关被挡下；这也是第三方 App 无法劫持系统 socket 的底层原因。</p>
+<hr>
+<h2>结论：能做 / 不能做（对无 root 的 App 成立）</h2>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>结果</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加载并运行<strong>自己目录里的 ET_DYN 动态二进制</strong></td>
+<td>✅ 可以（<code>/system/bin/linker64 &lt;路径&gt;</code>）</td>
+<td>SELinux 只拦 execve，不拦 mmap</td>
+</tr>
+<tr>
+<td>跑静态 / ET_EXEC 二进制</td>
+<td>❌</td>
+<td>bionic 只收 ET_DYN</td>
+</tr>
+<tr>
+<td>fork/exec 子进程（git 的 https helper、pip…）</td>
+<td>❌</td>
+<td>子进程 execve 撞 entrypoint</td>
+</tr>
+<tr>
+<td>读自己 App 的数据文件</td>
+<td>✅</td>
+<td>同 MLS 类别 <code>c104,…</code></td>
+</tr>
+<tr>
+<td>读别的 App 数据、系统 sealed 文件（seapp_contexts 等）</td>
+<td>❌</td>
+<td>类型 + 类别</td>
+</tr>
+<tr>
+<td>连系统 socket（zygote、property_service…）</td>
+<td>❌</td>
+<td>660 root:system + <code>zygote_socket</code> 标签</td>
+</tr>
+<tr>
+<td>借 shell（Shizuku）跑任意 aarch64 原生程序</td>
+<td>✅</td>
+<td>shell 域对 <code>shell_data_file</code> 有 entrypoint</td>
+</tr>
+</tbody></table>
+<p><strong>一句话</strong>：这台手机上&quot;能不能跑某个程序&quot;不是编译器问题、不是权限位问题，而是
+<strong>它落在哪个 SELinux 类型 + 哪些 MLS 类别 + 由谁 fork 出来</strong>。</p>
+<hr>
+<h2>复现命令</h2>
+<pre><code class="language-sh"># 1. execve vs linker64
+ls -l &lt;你的私有二进制&gt;; &lt;二进制&gt;            # Permission denied (EACCES)
+/system/bin/linker64 &lt;你的私有二进制&gt;        # 需要 LD_LIBRARY_PATH
+
+# 2. 自己的沙箱身份
+cat /proc/self/attr/current
+grep -E &#39;^Seccomp&#39; /proc/self/status
+adb_shell: grep -n untrusted_app /system/etc/selinux/plat_seapp_contexts
+adb_shell: ls -l /system/lib64/libseccomp_policy.so
+
+# 3. socket 模型
+adb_shell: ls -lZ /dev/socket | head
+adb_shell: grep zygote /proc/net/unix
+adb_shell: grep &quot;socket/zygote&quot; /system/etc/selinux/plat_file_contexts
+</code></pre>
+<h2>源码位置（本机快照）</h2>
+<p><code>$HOME/work/aosp-src</code>：<code>bionic/</code>、<code>system_core/</code>、<code>frameworks_base/</code>、<code>settings-src/</code>
+（来源：GitHub <code>aosp-mirror</code> tar 快照；镜像最后 push 2025-11-12，≈ Android 15/16，
+本机是 Android 17，个别实现已有漂移，文中已标注。）</p>
+</section>
+
+<section id="s2"><h2>二 · linker64 为什么能跑（源码依据）</h2>
+<p>日期：2026-11-06　源码：<code>$HOME/work/aosp-src/bionic</code>（aosp-mirror，main）</p>
+<h2>一句话</h2>
+<p><code>execve</code> 被拒是 <strong>SELinux 的 <code>file:entrypoint</code></strong>（目标类型 <code>app_data_file</code> 不给 app 当入口点）；
+能跑是因为 <code>/system/bin/linker64</code> 的类型是专门的 <strong><code>system_linker_exec</code></strong>，它作为&quot;解释器&quot;去
+<strong>mmap + mprotect(PROT_EXEC)</strong> 我们的文件（这属于 <code>file:execute</code>，app 对自己的 data 目录是允许的）。</p>
+<h2>本机实测（有编号，可复现）</h2>
+<table>
+<thead>
+<tr>
+<th>观察</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>私有文件模式</td>
+<td><code>-rwxr-xr-x</code>（0755），uid 就是我们自己</td>
+</tr>
+<tr>
+<td><code>/data</code> 挂载选项</td>
+<td><code>f2fs rw,...,seclabel,nosuid,nodev</code> —— <strong>没有 noexec</strong>，排除 mount 因素</td>
+</tr>
+<tr>
+<td>直接跑 <code>.../usr/bin/jq</code></td>
+<td><code>Permission denied</code>（EACCES）</td>
+</tr>
+<tr>
+<td><code>linker64 .../jq</code>（不带 LD_LIBRARY_PATH）</td>
+<td><code>CANNOT LINK EXECUTABLE ...: library &quot;libjq.so&quot; not found</code> ⇒ 已经进入 bionic 加载阶段，说明 mmap 成功</td>
+</tr>
+<tr>
+<td><code>LD_LIBRARY_PATH=.../lib linker64 .../jq</code></td>
+<td><strong>jq-1.8.2</strong>（正常输出）</td>
+</tr>
+<tr>
+<td><code>linker64 $HOME/../bin/rg</code></td>
+<td><code>has unexpected e_type: 2</code>（rg 是 ET_EXEC 全静态）</td>
+</tr>
+</tbody></table>
+<p>SELinux 类型（<code>ls -Z</code> / <code>getenforce</code> = Enforcing）：</p>
+<ul>
+<li><code>u:object_r:system_linker_exec:s0 /system/bin/linker64</code></li>
+<li><code>u:object_r:shell_exec:s0 /system/bin/sh</code></li>
+<li><code>u:object_r:app_data_file:s0:c104,c256,c512,c768</code> ← 我们的私有目录、tbins prefix、APK 解出来的 <code>libdshnode.so</code></li>
+</ul>
+<h2>bionic 源码依据</h2>
+<ol>
+<li><strong>只收 ET_DYN</strong>：<code>linker/linker_phdr.cpp:292-294</code><pre><code class="language-cpp">if (header_.e_type != ET_DYN) {
+  DL_ERR(&quot;\&quot;%s\&quot; has unexpected e_type: %d&quot;, name_.c_str(), header_.e_type);
+  return false;
+}
+</code></pre>
+ET_EXEC = 2 ⇒ 静态/PIE 之外的二进制一律被拒，和 <code>librg.so</code> 的实测报错逐字对应。</li>
+<li><strong>支持&quot;直接当加载器跑&quot;</strong>：<code>linker/linker_main.cpp:790-823</code><pre><code class="language-cpp">// When the linker is run directly rather than acting as PT_INTERP, parse
+// arguments and determine the executable to load. ...
+exe_to_load = args.argv[1];
+</code></pre>
+官方 usage 字符串也写着：<em>&quot;This program can also be run directly to load and run a dynamic executable.&quot;</em>
+所以 <code>/system/bin/linker64 &lt;elf&gt;</code> 是<strong>受支持用法</strong>，不是野路子。</li>
+<li>加载过程走 <code>mmap</code> + <code>mprotect(PROT_READ|PROT_WRITE)</code>（<code>linker_phdr.cpp:597-705</code>），
+与我们观察到的&quot;同目录 .so 能加载、execve 不能&quot;一致：前者是 <code>execute</code>，后者要 <code>entrypoint</code>。</li>
+</ol>
+<h2>对我们的影响</h2>
+<ul>
+<li>私有目录里的工具<strong>必须是 ET_DYN（PIE）+ bionic 动态链接</strong>；静态/ET_EXEC 无解（除非走 shell 身份）。</li>
+<li>依赖库必须让 linker 找得到：<code>LD_LIBRARY_PATH=&lt;prefix&gt;/lib</code>（<code>dsh-termux</code>/<code>tb</code> 包装器自动设），
+或编译时带 <code>RPATH=$ORIGIN</code>（<code>libdshnode.so</code> 就是这么找到 <code>libnode.so</code> 的）。</li>
+<li>需要 exec 子进程的工具（git 的 <code>git-remote-https</code>、python 的 pip 等）<strong>根本走不通</strong>：
+子进程 execve 仍然撞 <code>app_data_file</code> 的 entrypoint 限制 —— 这正是 git 只能以 shell 身份跑的原因。</li>
+</ul>
+</section>
+
+<section id="s3"><h2>三 · App 进程怎么变成 untrusted_app_34</h2>
+<p>日期：2026-11-06　源码：<code>$HOME/work/aosp-src</code>（A15 快照）　设备：Android 17 / 无 root</p>
+<h2>一、源码里的链路（带行号）</h2>
+<ol>
+<li><strong>init 起 zygote</strong>：<code>system_core/rootdir/init.zygote64.rc:1</code>
+<code>service zygote /system/bin/app_process64 -Xzygote /system/bin --zygote --start-system-server --socket-name=zygote</code>
+第 6 行 <code>socket zygote stream 660 root system</code>。此时进程是 <strong>root + <code>zygote</code> 域</strong>，不是 app。</li>
+<li><strong>app_process 是入口</strong>：<code>frameworks_base/cmds/app_process/app_main.cpp:79 AppRuntime::onStarted()</code>
+→ 启动 <code>com.android.internal.os.ZygoteInit</code>，之后由 Java 侧 <code>Zygote.forkAndSpecialize()</code> 逐个 fork。</li>
+<li><strong>每个 app 进程的降权顺序</strong>（<code>frameworks_base/core/jni/com_android_internal_os_Zygote.cpp</code>）：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>行号</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>552</td>
+<td><code>setgroups(...)</code> 设置附加组</td>
+</tr>
+<tr>
+<td>2010</td>
+<td><code>SetUpSeccompFilter(uid, is_child_zygote)</code> ← <strong>先装 seccomp</strong></td>
+</tr>
+<tr>
+<td>2001 / 2015</td>
+<td><code>setresgid</code> / <code>setresuid</code> ← 换成 app uid（如 10104）</td>
+</tr>
+<tr>
+<td>2133</td>
+<td><code>selinux_android_setcontext(uid, is_system_server, se_info, nice_name)</code> ← <strong>切 SELinux 域</strong></td>
+</tr>
+</tbody></table>
+<p><code>sandbox 三件套</code> = <strong>uid + seccomp + SELinux 域</strong>，一次 fork 里全部完成。</p>
+<h2>二、域是怎么选出来的（本机文件，一手）</h2>
+<p><code>/system/etc/selinux/plat_seapp_contexts</code>（root 0644；<strong>app 读不到</strong>，<code>adb_shell</code> 能读）第 41 行：</p>
+<pre><code>user=_app minTargetSdkVersion=34 domain=untrusted_app_34 type=app_data_file levelFrom=all
+</code></pre>
+<ul>
+<li>我们的进程：<code>/proc/self/attr/current</code> = <code>u:r:untrusted_app_34:s0:c104,c256,c512,c768</code>
+→ 命中 <code>minTargetSdkVersion=34</code>，且本 app 的 targetSdk 是 34。</li>
+<li><code>type=app_data_file</code> 就是&quot;应用数据文件&quot;的类型 —— 与前面 execve 被拒用同一个类型名。</li>
+<li><code>levelFrom=all</code> 生成了 <code>c104,c256,c512,c768</code> 这串 MLS 类别；<code>ls -Z</code> 里我们的文件带同样后缀，所以
+<strong>同一个 app 的文件只有同一 app（同类别）能读</strong>，这是应用隔离的另一半。</li>
+</ul>
+<h2>三、seccomp 实测（本机）</h2>
+<ul>
+<li><code>/proc/self/status</code>：<code>Seccomp: 2</code>、<code>Seccomp_filters: 1</code> → 过滤器已生效（mode 2 = FILTER）。</li>
+<li>直接 exec 私有 ELF 的报错是 <strong>EACCES（Permission denied）</strong>，不是 seccomp 的 EPERM/ENOSYS
+→ 再次证明拦路的是 SELinux 的 <code>entrypoint</code>，不是 seccomp。</li>
+</ul>
+<h2>四、上游源码与本机的漂移（值得记一笔）</h2>
+<ul>
+<li>A15 源码 <code>SetUpSeccompFilter()</code>（<code>com_android_internal_os_Zygote.cpp:639</code>）按 uid 调
+<code>set_app_seccomp_filter()</code> / <code>set_system_seccomp_filter()</code>，历史上策略来自文本文件
+<code>/system/etc/seccomp_policy/app.arm64.policy</code>。</li>
+<li>本机 Android 17：<strong>该文件不存在</strong>；<code>/system/etc/seccomp_policy/</code> 只剩 6 个（code_coverage、crash_dump、
+mediacodec、mediaextractor）。实际提供者是 <strong><code>/system/lib64/libseccomp_policy.so</code></strong>（36 KB，
+导出符号 <code>set_app_seccomp_filter</code>）。即策略从文本文件搬进了 so。</li>
+</ul>
+<h2>五、对&quot;能不能在本机跑东西&quot;的意义</h2>
+<ol>
+<li>我们的 app 永远是 <code>untrusted_app_34</code> + <code>app_data_file</code> + 1 层 seccomp，改不了（无 root、无 BL）。</li>
+<li><code>execve</code> 的拒绝来自 SELinux entrypoint；<code>mmap</code> 加载 OK —— 所以 <code>/system/bin/linker64 &lt;ET_DYN&gt;</code>
+这条旁路在原理上是长期稳的，不是漏洞利用。</li>
+<li>需要 fork/exec 子进程的工具（git 的 <code>git-remote-https</code>、pip、多进程命令行）在 app 身份下<strong>结构上不可行</strong>，
+只能整条走 <code>adb_shell</code>（shell 域对 <code>shell_data_file</code> 有 entrypoint）。</li>
+</ol>
+<h2>复现命令</h2>
+<pre><code class="language-sh">cat /proc/self/attr/current
+grep -E &#39;^Seccomp&#39; /proc/self/status
+adb_shell: grep -n &#39;untrusted_app&#39; /system/etc/selinux/plat_seapp_contexts
+adb_shell: ls -l /system/lib64/libseccomp_policy.so
+</code></pre>
+</section>
+
+<section id="s4"><h2>四 · 附录：AOSP 源码怎么弄到手机上</h2>
+<p>日期：2026-11-06　机型：BKQ-AN20（荣耀Magic8 RSR 保时捷设计），SM8850，Android 17 / SDK 37，aarch64
+环境：DSH app（uid 10104，untrusted_app_34）+ Shizuku shell（uid 2000）</p>
+<h2>结论</h2>
+<p>文章《一文搞掂Android AOSP的下载、编译、刷机》的三步，本机<strong>三步都不可行</strong>，但与 root 无关：
+不可行的是①x86_64 Linux 编译主机 ②解锁 BL（刷机通道）③荣耀无 AOSP device tree / vendor blobs。
+唯一可行的是&quot;读源码&quot;——但要换路径（GitHub codeload 的 tar 快照），不能用 repo/git 全量同步。</p>
+<h2>实测数据</h2>
+<h3>1) USTC 镜像 git clone：失败（卡死）</h3>
+<ul>
+<li>位置：<a href="https://mirrors.ustc.edu.cn/aosp/platform/%7Bbuild,packages/apps/Settings,...%7D">https://mirrors.ustc.edu.cn/aosp/platform/{build,packages/apps/Settings,...}</a></li>
+<li>现象：ref advertisement 能拿到（manifest.git/info/refs 750 KB / 0.6 s），但 POST /git-upload-pack 之后
+进度恒停在 <strong>119 KB</strong>，1–4 分钟无增长，HTTPS / HTTP / HTTP1.1 / 去掉 Expect 四种组合全都一样。</li>
+<li>判定：不是 TLS，不是快照深度，是链路（或镜像侧）对 fetch 流量的阻塞。</li>
+</ul>
+<h3>2) GitHub codeload tar 快照：可用（推荐）</h3>
+<ul>
+<li>组织：aosp-mirror（100 个仓库，覆盖 frameworks/base、packages/apps/<em>、system/</em>、build/* 等主要项目）</li>
+<li>实测：<ul>
+<li>platform_packages_apps_Settings（main）：46.2 MB / 7.0 s（≈6.7 MB/s）→ 解压 167 MB / 8087 个文件</li>
+<li>platform_system_core（main）：1.9 MB / 2.8 s → 解压 18 MB / 1810 个文件</li>
+<li>校验：src/com/android/settings/homepage/SettingsHomepageActivity.java 862 行，可 grep</li>
+</ul>
+</li>
+<li>版本可选：tags 里有 <strong>android-12.1.0_r1</strong>（文章用的版本）、android-14.0.0_r1、android-15.0.0_r1，
+refs/tags 的 tarball 返回 200 application/x-gzip。</li>
+<li>脚本：$HOME/work/aosp-get.mjs
+<code>node aosp-get.mjs packages/apps/Settings android-12.1.0_r1 ./a12</code>
+映射规则：&lt;路径&gt;/<a> → aosp-mirror/platform_<a>_<b></li>
+</ul>
+<h3>3) git 本身能在本机跑（但只能以 shell 身份）</h3>
+<ul>
+<li>app 身份：git clone 立即 <code>fatal: cannot exec &#39;remote-https&#39;: Permission denied</code>（SELinux 禁止 app 私有目录 execve）</li>
+<li>shell 身份：把 termux prefix 复制到 /data/local/tmp/tp + 包装 /data/local/tmp/gitx.sh（设 GIT_EXEC_PATH/GIT_SSL_CAINFO）
+后 <code>git version 2.56.0</code> 正常、helper 能 exec；失败原因是上面的镜像卡死，不是 git 本身。</li>
+<li>注意：CURL_CA_BUNDLE 不生效，必须用 GIT_SSL_CAINFO 指向 prefix/etc/tls/cert.pem。</li>
+</ul>
+<h3>4) 编译 / 刷机：硬墙</h3>
+<ul>
+<li>官方要求 64 位 x86 主机 + 400 GB 空闲 + 64 GB 内存；本机 aarch64、无 apt、无 python/gcc/clang/java，
+AOSP host 工具全是 prebuilts/build-tools/linux-x86 的 x86_64 ELF，跑不了。</li>
+<li>内存：23.7 GB（可用 6.5 GB），已知 26 GiB + 4 GiB swap 的机器 -j2 仍被 oomd 杀。</li>
+<li>BL：ro.boot.flash.locked=1、verifiedbootstate=green；荣耀官方（2026-04-25）明确不提供解锁码。</li>
+<li>AOSP 只带 Pixel / goldfish / cuttlefish 设备配置，荣耀无 device tree / vendor blobs。</li>
+</ul>
+<h2>复现命令</h2>
+<pre><code>node $HOME/work/aosp-get.mjs packages/apps/Settings    # 约 46 MB / 7 s
+grep -rn &quot;class SettingsHomepageActivity&quot; aosp_*       # 解压后
+</code></pre>
+</section>
+
+
+<footer>
+<p>设备：荣耀 Magic8 RSR 保时捷设计（BKQ-AN20，SM8850），Android 17 / SDK 37，kernel 6.12.58，aarch64，24 GB RAM。<br>
+身份：普通 App（uid 10104，targetSdk 34）+ Shizuku 提供的 shell（uid 2000）。无 root、bootloader 锁定。</p>
+<p>源码快照来自 GitHub <code>aosp-mirror</code>（最后 push 2025-11-12，≈ Android 15/16），与本机 Android 17 的差异已在文中标注。</p>
+<p>原始 Markdown：<a href="src/main.md">主文</a> · <a href="src/linker.md">linker64</a> · <a href="src/zygote.md">zygote</a> · <a href="src/aosp.md">AOSP 附录</a></p>
+</footer>
+</main></body></html>
