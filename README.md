@@ -10,6 +10,7 @@
 站点：https://verchiel666.github.io/android-sandbox-notes/
 
 - `index.html` 单页版（移动端优先，支持深色模式）
+- `plugin-diary.html` 第二篇：[给 DSH 写插件的 3 次真实翻车](https://verchiel666.github.io/android-sandbox-notes/plugin-diary.html)
 - `src/*.md` 原始 Markdown（含源码行号与复现命令）
 
 设备：荣耀 Magic8 RSR（BKQ-AN20），Android 17 / SDK 37，aarch64，无 root，Shizuku shell。
