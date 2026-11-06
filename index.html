@@ -5,6 +5,19 @@
 <meta name="color-scheme" content="light dark">
 <title>无 root 手机上的 Android 沙箱实测</title>
 <meta name="description" content="用 AOSP 源码 + 本机实测，讲清一台不 root 的 Android 手机上的三层沙箱：execve/entrypoint、zygote 身份、init socket 权限。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无 root 手机上的 Android 沙箱实测">
+<meta property="og:description" content="三层：SELinux entrypoint（能不能执行）· zygote 一次 fork 定死的身份（你是谁）· init 发出的 socket 权限（能跟谁说话）。AOSP 源码行号 + 真机数据。">
+<meta property="og:image" content="https://verchiel666.github.io/android-sandbox-notes/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://verchiel666.github.io/android-sandbox-notes/">
+<meta property="og:site_name" content="android-sandbox-notes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="无 root 手机上的 Android 沙箱实测">
+<meta name="twitter:image" content="https://verchiel666.github.io/android-sandbox-notes/og.png">
+<link rel="canonical" href="https://verchiel666.github.io/android-sandbox-notes/">
+<meta name="theme-color" content="#0b6bcb">
 <style>
 :root{--fg:#1a1a1a;--bg:#fff;--muted:#666;--line:#e5e5e5;--code:#f6f6f6;--accent:#0b6bcb}
 @media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#121212;--muted:#9a9a9a;--line:#2a2a2a;--code:#1d1d1d;--accent:#6cb6ff}}

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://verchiel666.github.io/android-sandbox-notes/sitemap.xml
