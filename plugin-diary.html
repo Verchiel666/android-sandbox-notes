@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-Hans"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>给 DSH 写插件：3 次真实翻车</title>
+<meta property="og:type" content="article">
+<meta property="og:title" content="在一台不 root 的 Android 手机上给 DSH 写插件：3 次真实翻车">
+<meta property="og:description" content="npm staged 占位把版本吞了、codeload 包名没有 sha、jsDelivr 少组织名 400、解包 551 秒被 600 秒超时杀掉、列表重扫 7 万个文件卡 5 分钟。">
+<meta property="og:image" content="https://verchiel666.github.io/android-sandbox-notes/og.png">
+<meta property="og:url" content="https://verchiel666.github.io/android-sandbox-notes/plugin-diary.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b6bcb">
+<style>
+:root{--fg:#1a1a1a;--bg:#fff;--muted:#666;--line:#e5e5e5;--code:#f6f6f6;--accent:#0b6bcb}
+@media (prefers-color-scheme:dark){:root{--fg:#e8e8e8;--bg:#121212;--muted:#9a9a9a;--line:#2a2a2a;--code:#1d1d1d;--accent:#6cb6ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.7 -apple-system,"PingFang SC","Noto Sans CJK SC",Roboto,sans-serif;padding:0 16px 64px}
+main{max-width:820px;margin:0 auto}
+header{padding:36px 0 12px;border-bottom:1px solid var(--line);margin-bottom:24px}
+h1{font-size:1.65rem;line-height:1.3;margin:.2em 0 .3em}
+h2{font-size:1.3rem;margin:2em 0 .6em;padding-top:.4em;border-top:1px solid var(--line)}
+h3{font-size:1.08rem;margin:1.4em 0 .4em}
+p,li{color:var(--fg)}
+.sub{color:var(--muted);font-size:.94rem;margin:0}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+nav a{font-size:.86rem;text-decoration:none;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+a{color:var(--accent)}
+code{background:var(--code);padding:.12em .35em;border-radius:4px;font-size:.88em;word-break:break-all}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border:1px solid var(--line)}
+pre code{background:none;padding:0;font-size:.85rem;line-height:1.55;word-break:normal}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.9rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--code);font-weight:600}
+blockquote{margin:1em 0;padding:.4em 0 .4em 14px;border-left:3px solid var(--accent);color:var(--muted)}
+blockquote p{margin:.3em 0;color:var(--muted)}
+hr{border:none;border-top:1px solid var(--line);margin:2.4em 0}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+.tag{display:inline-block;font-size:.78rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 7px;margin-right:6px}
+</style>
+</head><body><main>
+<header>
+<h1>给 DSH 写插件：3 次真实翻车</h1>
+<p class="sub">npm 静默吞版本 · codeload 包名没有 sha · 1.8 GB 解包 551 秒 · 列表重扫 7 万文件卡 5 分钟</p>
+<p class="sub" style="margin-top:10px"><span class="tag">dsh-aosp@0.1.5</span><span class="tag">荣耀 Magic8 RSR / Android 17</span><span class="tag">无 root</span><span class="tag">2026-11-06</span></p>
+<nav><a href="index.html">← 返回《无 root 手机上的 Android 沙箱实测》</a><a href="src/plugin-diary.md">原始 Markdown</a></nav>
+</header>
+<blockquote>
+<p>目标：让 DSH 能直接&quot;拉一个 AOSP 模块的源码并在本机搜代码&quot;。
+约束：没有 root、没有 git 二进制、<code>github.com</code> 不通、只有 node（v24）和一个能发 REST 的 GitHub token。
+结果：<code>dsh-aosp</code>，5 个版本，最后 <code>npm i dsh-aosp@0.1.5</code>。</p>
+</blockquote>
+<p>这篇文章不讲&quot;怎么写插件&quot;（那是文档的事），只讲<strong>这次真实遇到的坑</strong>——每个都有当时的输出或数字。</p>
+<hr>
+<h2>坑 1｜npm 新包首发是&quot;暂存&quot;的，同版本重发会被<strong>静默</strong>吞掉</h2>
+<p>第一次 <code>npm publish</code> 输出很漂亮：</p>
+<pre><code>npm notice name: dsh-aosp
+npm notice version: 0.1.0
++ dsh-aosp@0.1.0
+</code></pre>
+<p>但 registry 上查到的却是：</p>
+<pre><code>versions: 0.0.0-stage
+description: Temporary package placeholder for staged publishing
+</code></pre>
+<p><code>0.0.0-stage</code> 是 npm 新包首发时先出现的占位符，真实版本 1–2 分钟后才可见。<strong>第一次翻车就在这里</strong>：我加完第 5 个工具（<code>aosp_grep</code>）后把版本号改成 0.1.1 重新发——发布&quot;成功&quot;，可下载 tarball 加载后只有 4 个工具。</p>
+<p>原因是 0.1.1 这个版本号在之前的试探里已经进过暂存队列，重发得到的是：</p>
+<pre><code>npm error 409 Conflict - PUT https://registry.npmjs.org/dsh-aosp
+npm error Cannot publish over previously staged version &quot;0.1.1&quot;
+</code></pre>
+<p>而这条错误被我的 <code>tail</code> 过滤掉了，于是 registry 最后上线的仍是旧内容的 0.1.1。</p>
+<p><strong>修法</strong>（已固化成发布后检查表）：</p>
+<ol>
+<li>发布后<strong>不要相信输出</strong>，下载 tarball、解包、真实 <code>import</code> 一次、把工具列表打出来；</li>
+<li>内容不对就<strong>换版本号重发</strong>（0.1.2 才真正带上 <code>aosp_grep</code>）；</li>
+<li>查 <code>&lt;pkg&gt;</code>、<code>dist-tags.latest</code>、<code>versions</code> 三处，以 registry 为准。</li>
+</ol>
+<hr>
+<h2>坑 2｜codeload 的 tar 包目录名里<strong>没有</strong> commit sha</h2>
+<p>想要&quot;增量更新&quot;，就得知道本地这份源码对应哪个 commit。第一版实现想省一次 API 调用：从 tar 包顶层目录名取 sha。</p>
+<pre><code>首行 = &quot;platform_external_zlib-main/&quot;   ← 分支 ref 时是分支名，不是 sha
+tarballSha = null
+</code></pre>
+<p>只有按 sha 下载时 GitHub 才会把目录名写成 <code>repo-&lt;sha&gt;/</code>。</p>
+<p><strong>修法</strong>：反过来做——先用 API 查 ref 的 sha，<strong>再按 sha 下载</strong>：</p>
+<pre><code class="language-js">const { sha } = await remoteHead(repo, ref);      // /commits/refs/heads/main
+await downloadTarball(project, sha, tgz);          // /tar.gz/&lt;sha&gt;
+</code></pre>
+<p>好处是包内容与记录的 sha 严格一致，增量比对不会出现&quot;本地比记录新/旧&quot;的错位。</p>
+<hr>
+<h2>坑 3｜jsDelivr 的路径必须带组织名，否则 400</h2>
+<p>增量更新只下载改动文件，靠 jsDelivr 镜像取单文件（<code>raw.githubusercontent.com</code> 在本机不通）。第一版：</p>
+<pre><code>取文件失败 400：Android.bp
+</code></pre>
+<p>响应正文写着：<code>Invalid URL. The URL structure is /gh/user/repo@version/file.js</code> —— 少了组织名。</p>
+<p><strong>修法</strong>：</p>
+<pre><code>https://gcore.jsdelivr.net/gh/aosp-mirror/platform_external_zlib@&lt;sha&gt;/Android.bp
+</code></pre>
+<p>实测同样按 commit 取文件：<code>200 3392B</code>。</p>
+<hr>
+<h2>坑 4｜解包 1.8 GB 要 551 秒，600 秒的超时会在最后一刻杀掉它</h2>
+<p>第一次重拉 <code>frameworks/base</code> 得到：</p>
+<pre><code>❌ frameworks_base: 解包失败（tar null）：
+</code></pre>
+<p><code>tar null</code> = 被信号终止 —— 我给 tar 设的 600 秒超时到了。当时目录里只有 158 MB / 3146 个文件。</p>
+<p>第二天（同一天晚些）用 30 分钟超时重跑：</p>
+<pre><code>[0.8s]   下载 frameworks/base@main #1cdfff5 …
+[70.3s]  解包 1148.5 MB …
+[621.2s] 解包完成 550.7s
+✅ 1713.3 MB 下载 / 69.5s，解包 551.1s，56733 文件
+</code></pre>
+<p><strong>反直觉的数据</strong>：解包耗时不是按字节线性，而是按<strong>文件数</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>压缩包</th>
+<th>解压后</th>
+<th>文件数</th>
+<th>解包耗时</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>packages/apps/Settings</td>
+<td>146 MB</td>
+<td>167 MB</td>
+<td>8 087</td>
+<td><strong>2.1 s</strong></td>
+</tr>
+<tr>
+<td>frameworks/base</td>
+<td>1713 MB</td>
+<td>1.8 GB</td>
+<td>56 733</td>
+<td><strong>551 s</strong></td>
+</tr>
+</tbody></table>
+<p>即 ≈100 文件/秒。600 秒只差 50 秒，随便跑点别的就超时。</p>
+<p><strong>修法</strong>：tar 超时 30 分钟；下载失败自动重试 3 次；日志里打印真实解包耗时，下次不必再猜。</p>
+<hr>
+<h2>坑 5｜列表工具每次重扫 56k 文件，卡到 5 分钟</h2>
+<p><code>aosp_list</code> 原本每次都用 <code>readdir</code> 递归统计每个模块的文件数/体积。四个模块、约 7 万个文件时，实测<strong>卡住超过 5 分钟</strong>（我的工具调用都超时了）。</p>
+<p><strong>修法</strong>：把计数写进 <code>.dsh-aosp.json</code>，列表直接读缓存（<strong>14–17 ms</strong>），要重扫时显式传 <code>refresh:true</code>。缓存写入时机是&quot;下载/更新完成时&quot;。</p>
+<pre><code>listModules（缓存）耗时 14 ms
+ frameworks_base    1713 MB 56733 文件 #1cdfff5
+ settings-src        146 MB  8087 文件 #7c59825
+ bionic               54 MB  3451 文件 #731631f
+ system_core          12 MB  1810 文件 #a3b721a
+</code></pre>
+<hr>
+<h2>工程侧：三层验证，缺一层就会漏</h2>
+<p>这台机器上没有&quot;跑一下试试&quot;的便利，所以每个版本都过三关：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>内容</th>
+<th>最后一次通过数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>离线单测</td>
+<td>项目名映射、路径穿越防护、行号分页、模块聚合、缓存命中、插件注册</td>
+<td><strong>20 项</strong></td>
+</tr>
+<tr>
+<td>联网测试</td>
+<td>真下载、真按 sha 记录、真增量（把 meta 退回旧 sha 再更新）</td>
+<td><strong>24 项</strong></td>
+</tr>
+<tr>
+<td>引擎冒烟</td>
+<td>引擎里真的 cordis 4.0.5：<code>inject</code>、注册、<code>execute</code>、审批钩子、<code>dispose</code> 清理</td>
+<td><strong>12 项</strong></td>
+</tr>
+</tbody></table>
+<p>审批钩子值得一提：<code>aosp_fetch</code> / <code>aosp_update</code> 会写盘，于是把 <code>tools/pre-execute</code> 的 <code>allow</code> 升级成 <code>ask</code>，
+但<strong>上游的 deny 不许被改写</strong>（这条也有测试）。</p>
+<hr>
+<h2>版本流水</h2>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>变化</th>
+<th>教训来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.1.0</td>
+<td>4 个工具，首发</td>
+<td>staged 占位</td>
+</tr>
+<tr>
+<td>0.1.1</td>
+<td>加 <code>aosp_grep</code>——<strong>实际没进包</strong></td>
+<td>坑 1</td>
+</tr>
+<tr>
+<td>0.1.2</td>
+<td>重发，5 个工具</td>
+<td>发布后验证</td>
+</tr>
+<tr>
+<td>0.1.3</td>
+<td><code>aosp_update</code> 增量更新</td>
+<td>坑 2、坑 3</td>
+</tr>
+<tr>
+<td>0.1.4</td>
+<td>下载重试 3 次 / tar 超时 30 分钟</td>
+<td>坑 4</td>
+</tr>
+<tr>
+<td>0.1.5</td>
+<td><code>aosp_list</code> 用缓存 + <code>refresh</code></td>
+<td>坑 5</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>可以带走的三条</h2>
+<ol>
+<li><strong>发布后必须验证产物本身</strong>：拉 tarball、真加载、打工具清单。这比看 CI 绿更可靠——尤其当输出被管道过滤时。</li>
+<li><strong>超时要按最坏情况设</strong>：这台手机上小文件解包只有 ≈100 文件/秒，1.8 GB 的源码树要 9 分钟。</li>
+<li><strong>&quot;慢&quot;也是一种 bug</strong>：列表工具重扫 7 万个文件要几分钟，改成缓存后 14 ms——用户感知的差别比功能增减更大。</li>
+</ol>
+<hr>
+<p><em>设备：荣耀 Magic8 RSR（BKQ-AN20），Android 17 / SDK 37，aarch64，无 root；插件 <code>dsh-aosp@0.1.5</code>，源码在 <code>Verchiel666/dsh-aosp</code>，站点 <code>verchiel666.github.io/android-sandbox-notes</code>。</em></p>
+
+<footer><p>源码：<a href="https://github.com/Verchiel666/dsh-aosp">Verchiel666/dsh-aosp</a> · npm <code>dsh-aosp@0.1.5</code></p></footer>
+</main></body></html>
