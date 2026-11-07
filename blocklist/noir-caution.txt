@@ -1,0 +1,18 @@
+# 谨慎档：含 pay/bank/login/push/验证码 关键词或与功能域名同源，默认不拦
+huatuocode.huatuo.qq.com	8
+analytics.map.qq.com	7
+log.wechatpay.cn	4
+ads.privacy.qq.com	4
+otheve.beacon.qq.com	3
+rttgpsreport.map.qq.com	2
+mqqeve.beacon.qq.com	2
+othstr.beacon.qq.com	2
+pingma.qq.com	2
+ad.qq.com	2
+static.geetest.com	1
+bugtrace.3g.qq.com	1
+log.tbs.qq.com	1
+ad.weixin.qq.com	1
+pre.rmonitor.qq.com	1
+rmonitor.qq.com	1
+t.rmonitor.qq.com	1

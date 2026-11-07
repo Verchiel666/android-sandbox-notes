@@ -1,0 +1,833 @@
+{
+ "name": "noir-phone tracker blocklist",
+ "generatedAt": "2026-11-07T03:55:45.605Z",
+ "device": "HONOR BKQ-AN20 / Android 17",
+ "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
+ "counts": {
+  "total_trackers": 222,
+  "blocked": 205,
+  "caution": 17
+ },
+ "entries": [
+  {
+   "host": "metrics-drcn.dt.hihonorcloud.com",
+   "apps": 56
+  },
+  {
+   "host": "cgi.qplus.com",
+   "apps": 30
+  },
+  {
+   "host": "metrics-ad-drcn.dt.hihonorcloud.com",
+   "apps": 15
+  },
+  {
+   "host": "applog.snssdk.com",
+   "apps": 14
+  },
+  {
+   "host": "apmplus.volces.com",
+   "apps": 12
+  },
+  {
+   "host": "ad.toutiao.com",
+   "apps": 11
+  },
+  {
+   "host": "applog.uc.cn",
+   "apps": 10
+  },
+  {
+   "host": "gjapplog.ucweb.com",
+   "apps": 10
+  },
+  {
+   "host": "applog.zijieapi.com",
+   "apps": 9
+  },
+  {
+   "host": "applog.bytedance.net",
+   "apps": 9
+  },
+  {
+   "host": "apps.oceanengine.com",
+   "apps": 9
+  },
+  {
+   "host": "log.snssdk.com",
+   "apps": 7
+  },
+  {
+   "host": "developer.umeng.com",
+   "apps": 7
+  },
+  {
+   "host": "ichannel.snssdk.com",
+   "apps": 6
+  },
+  {
+   "host": "metrics-test-drcn.dt.hihonorcloud.com",
+   "apps": 6
+  },
+  {
+   "host": "i.snssdk.com",
+   "apps": 6
+  },
+  {
+   "host": "aspect-upush.umeng.com",
+   "apps": 6
+  },
+  {
+   "host": "applog.lc.quark.cn",
+   "apps": 6
+  },
+  {
+   "host": "manual.sensorsdata.cn",
+   "apps": 5
+  },
+  {
+   "host": "api.snssdk.com",
+   "apps": 5
+  },
+  {
+   "host": "cnlogs.umeng.com",
+   "apps": 5
+  },
+  {
+   "host": "h-adashx.ut.taobao.com",
+   "apps": 5
+  },
+  {
+   "host": "rtapplog.snssdk.com",
+   "apps": 4
+  },
+  {
+   "host": "rtlog.snssdk.com",
+   "apps": 4
+  },
+  {
+   "host": "abtest-ch.snssdk.com",
+   "apps": 4
+  },
+  {
+   "host": "ad.zijieapi.com",
+   "apps": 4
+  },
+  {
+   "host": "aweme.snssdk.com",
+   "apps": 4
+  },
+  {
+   "host": "norma-external-collect.meizu.com",
+   "apps": 4
+  },
+  {
+   "host": "alogsus.umeng.com",
+   "apps": 4
+  },
+  {
+   "host": "alogus.umeng.com",
+   "apps": 4
+  },
+  {
+   "host": "tobapplog.ctobsnssdk.com",
+   "apps": 4
+  },
+  {
+   "host": "toblog.ctobsnssdk.com",
+   "apps": 4
+  },
+  {
+   "host": "ccs.umeng.com",
+   "apps": 4
+  },
+  {
+   "host": "metrics-drru.dt.hihonorcloud.com",
+   "apps": 3
+  },
+  {
+   "host": "metrics.dt.hihonorcloud.com",
+   "apps": 3
+  },
+  {
+   "host": "ecom.snssdk.com",
+   "apps": 3
+  },
+  {
+   "host": "effect.snssdk.com",
+   "apps": 3
+  },
+  {
+   "host": "frontier.snssdk.com",
+   "apps": 3
+  },
+  {
+   "host": "static.doubleclick.net",
+   "apps": 3
+  },
+  {
+   "host": "is.snssdk.com",
+   "apps": 3
+  },
+  {
+   "host": "success.ctobsnssdk.com",
+   "apps": 3
+  },
+  {
+   "host": "www.pangle.cn",
+   "apps": 3
+  },
+  {
+   "host": "log.umsns.com",
+   "apps": 3
+  },
+  {
+   "host": "pslog.umeng.com",
+   "apps": 3
+  },
+  {
+   "host": "ucc.umeng.com",
+   "apps": 3
+  },
+  {
+   "host": "ulogs.umeng.com",
+   "apps": 3
+  },
+  {
+   "host": "ulogs.umengcloud.com",
+   "apps": 3
+  },
+  {
+   "host": "utoken.umeng.com",
+   "apps": 3
+  },
+  {
+   "host": "ad.e.waimai.sankuai.com",
+   "apps": 3
+  },
+  {
+   "host": "babel-statistics-android.dreport.meituan.net",
+   "apps": 3
+  },
+  {
+   "host": "babel-statistics-android.dreport.zservey.com",
+   "apps": 3
+  },
+  {
+   "host": "dreport.meituan.net",
+   "apps": 3
+  },
+  {
+   "host": "live-monitor-broker.inf.st.sankuai.com",
+   "apps": 3
+  },
+  {
+   "host": "log.tec73.com",
+   "apps": 3
+  },
+  {
+   "host": "applog-perf.uc.cn",
+   "apps": 3
+  },
+  {
+   "host": "metrics-basecloud-drcn.dt.hihonorcloud.com",
+   "apps": 3
+  },
+  {
+   "host": "google-analytics.com",
+   "apps": 3
+  },
+  {
+   "host": "toblog-alink.ctobsnssdk.com",
+   "apps": 2
+  },
+  {
+   "host": "metrics-dre.dt.hihonorcloud.com",
+   "apps": 2
+  },
+  {
+   "host": "b.stats.paypal.com",
+   "apps": 2
+  },
+  {
+   "host": "athena-api.oceanengine.com",
+   "apps": 2
+  },
+  {
+   "host": "ib.snssdk.com",
+   "apps": 2
+  },
+  {
+   "host": "boe.i.snssdk.com",
+   "apps": 2
+  },
+  {
+   "host": "clue.oceanengine.com",
+   "apps": 2
+  },
+  {
+   "host": "dpprofile.snssdk.com",
+   "apps": 2
+  },
+  {
+   "host": "jsb.snssdk.com",
+   "apps": 2
+  },
+  {
+   "host": "errnewlog.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "errnewlogos.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "abtest.volceapplog.com",
+   "apps": 2
+  },
+  {
+   "host": "klink.volceapplog.com",
+   "apps": 2
+  },
+  {
+   "host": "tobapplog.volceapplog.com",
+   "apps": 2
+  },
+  {
+   "host": "toblog.volceapplog.com",
+   "apps": 2
+  },
+  {
+   "host": "adtrack.ucweb.com",
+   "apps": 2
+  },
+  {
+   "host": "www.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "mobile.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "oauth2.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "resolve.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "sss.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "ad.maoyan.com",
+   "apps": 2
+  },
+  {
+   "host": "app-monitor.ele.me",
+   "apps": 2
+  },
+  {
+   "host": "collect.ux.21cn.com",
+   "apps": 2
+  },
+  {
+   "host": "ads.youtube.com",
+   "apps": 1
+  },
+  {
+   "host": "www.google-analytics.com",
+   "apps": 1
+  },
+  {
+   "host": "vodreport.qcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "metrics1.data.hicloud.com",
+   "apps": 1
+  },
+  {
+   "host": "crash.163.com",
+   "apps": 1
+  },
+  {
+   "host": "static.feibotong.com",
+   "apps": 1
+  },
+  {
+   "host": "ads.tiktok.com",
+   "apps": 1
+  },
+  {
+   "host": "ar.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "ar.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "aweme-aigc.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "aweme-eagle-hl.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "boe.aweme.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "cgp.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "ec.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "f-cashloan.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "frontier-aweme.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "gate.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "haohuo.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "hotsoon.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "collector.weiyun.com",
+   "apps": 1
+  },
+  {
+   "host": "crash-reporting.yy.com",
+   "apps": 1
+  },
+  {
+   "host": "metrics-drcn.security.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "spider-tracker.xiaohongshu.com",
+   "apps": 1
+  },
+  {
+   "host": "updatereport-dra.platform.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "updatereport-drcn.platform.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "updatereport-dre.platform.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "updatereport-drru.platform.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "updatereport.platform.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "aweme-lq.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "ad.oceanengine.com",
+   "apps": 1
+  },
+  {
+   "host": "i-hl.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "imapi.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "adx-bj.statisticslinks.com",
+   "apps": 1
+  },
+  {
+   "host": "adx-strategy-api-cn.statisticslinks.com",
+   "apps": 1
+  },
+  {
+   "host": "adx-tk-sz.statisticslinks.com",
+   "apps": 1
+  },
+  {
+   "host": "da.statisticslinks.com",
+   "apps": 1
+  },
+  {
+   "host": "eventtracking.hprtcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "log.ys7.com",
+   "apps": 1
+  },
+  {
+   "host": "statistic.live.126.net",
+   "apps": 1
+  },
+  {
+   "host": "tracking.v.tf.360.cn",
+   "apps": 1
+  },
+  {
+   "host": "alink.volceapplog.com",
+   "apps": 1
+  },
+  {
+   "host": "log-api.oceanengine.com",
+   "apps": 1
+  },
+  {
+   "host": "click.log.z3.cn",
+   "apps": 1
+  },
+  {
+   "host": "log.ireader.com",
+   "apps": 1
+  },
+  {
+   "host": "aaid.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "api.log.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "apm.log.hunantv.com",
+   "apps": 1
+  },
+  {
+   "host": "apm.log.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "apperr.log.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "collect.bz.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "crash.data.v2.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "crash.log.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "dflow.log.hunantv.com",
+   "apps": 1
+  },
+  {
+   "host": "dolphin.log.mgtv.com",
+   "apps": 1
+  },
+  {
+   "host": "static.ymm56.com",
+   "apps": 1
+  },
+  {
+   "host": "anti-sdk-report-pre.m.jd.com",
+   "apps": 1
+  },
+  {
+   "host": "anti-sdk-report.m.jd.com",
+   "apps": 1
+  },
+  {
+   "host": "deeplink.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "log.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "rtlog.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "tp-pay.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "dsp.ads.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "plbslog.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "offmsg.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "ssp.ads.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "ad.wx.com",
+   "apps": 1
+  },
+  {
+   "host": "www.dktest-mmcrash.com",
+   "apps": 1
+  },
+  {
+   "host": "statres.quickapp.cn",
+   "apps": 1
+  },
+  {
+   "host": "a.tracking.yangkeduo.com",
+   "apps": 1
+  },
+  {
+   "host": "bugreport.bangcle.com",
+   "apps": 1
+  },
+  {
+   "host": "data-sdk-uuid-report.dreport.meituan.net",
+   "apps": 1
+  },
+  {
+   "host": "data-sdk-uuid-report.dreport.zservey.com",
+   "apps": 1
+  },
+  {
+   "host": "live-monitor-broker.sankuai.com",
+   "apps": 1
+  },
+  {
+   "host": "statecheck.swiftpass.cn",
+   "apps": 1
+  },
+  {
+   "host": "static.122.gov.cn",
+   "apps": 1
+  },
+  {
+   "host": "data.altbeacon.org",
+   "apps": 1
+  },
+  {
+   "host": "metrics-dra.dt.hihonorcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "analytics.tiktok.com",
+   "apps": 1
+  },
+  {
+   "host": "api16-access-sg.pangle.io",
+   "apps": 1
+  },
+  {
+   "host": "api16-access-ttp.tiktokpangle.us",
+   "apps": 1
+  },
+  {
+   "host": "lf-static.tiktokpangle-cdn-us.com",
+   "apps": 1
+  },
+  {
+   "host": "www.pangleglobal.com",
+   "apps": 1
+  },
+  {
+   "host": "log.byteoversea.com",
+   "apps": 1
+  },
+  {
+   "host": "ads.service.kgidc.cn",
+   "apps": 1
+  },
+  {
+   "host": "ads.service.kugou.com",
+   "apps": 1
+  },
+  {
+   "host": "adashx.ut.youku.com",
+   "apps": 1
+  },
+  {
+   "host": "audid.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "h.cn-wulanchabu.log.aliyuncs.com",
+   "apps": 1
+  },
+  {
+   "host": "aes-1.cn-wulanchabu.log.aliyuncs.com",
+   "apps": 1
+  },
+  {
+   "host": "adashx4yt.m.taobao.com",
+   "apps": 1
+  },
+  {
+   "host": "gj.track.uc.cn",
+   "apps": 1
+  },
+  {
+   "host": "log.yolinkmob.com",
+   "apps": 1
+  },
+  {
+   "host": "apmlog.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "cmonitor.iqiyi.com",
+   "apps": 1
+  },
+  {
+   "host": "ping-monitor.shouji.sogou.com",
+   "apps": 1
+  },
+  {
+   "host": "app-monitor.ar.elenet.me",
+   "apps": 1
+  },
+  {
+   "host": "usertrack.alibaba-inc.com",
+   "apps": 1
+  },
+  {
+   "host": "tracking.svc-nue.pushwoosh.com",
+   "apps": 1
+  },
+  {
+   "host": "adtrack.xiaojukeji.com",
+   "apps": 1
+  },
+  {
+   "host": "app.appsflyer.com",
+   "apps": 1
+  },
+  {
+   "host": "fp-it-tracker.fengkongcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "static.deepseek.com",
+   "apps": 1
+  },
+  {
+   "host": "analytics.oceanengine.com",
+   "apps": 1
+  },
+  {
+   "host": "errlog.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "errlogos.umeng.com",
+   "apps": 1
+  },
+  {
+   "host": "log.qchannel03.cn",
+   "apps": 1
+  },
+  {
+   "host": "zxid-m.mobileservice.cn",
+   "apps": 1
+  },
+  {
+   "host": "log.aliyuncs.com",
+   "apps": 1
+  },
+  {
+   "host": "ads3-normal-hl.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ads3-normal-lf.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ads3-normal-lq.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ads5-normal-hl.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ads5-normal-lf.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ads5-normal-lq.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "boe-ic.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "feedback-c.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "i-boe.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "bsync.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "gecko.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ic.snssdk.com",
+   "apps": 1
+  },
+  {
+   "host": "imapi-oth.zijieapi.com",
+   "apps": 1
+  },
+  {
+   "host": "ad.12306.cn",
+   "apps": 1
+  },
+  {
+   "host": "up4.ucweb.com",
+   "apps": 1
+  },
+  {
+   "host": "report-sams-qa.ghsmpwalmart.com",
+   "apps": 1
+  }
+ ]
+}

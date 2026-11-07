@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>noir-phone 追踪域名黑名单</title>
+<style>body{font:16px/1.7 -apple-system,system-ui,"Noto Sans SC",sans-serif;max-width:760px;margin:40px auto;padding:0 18px;color:#1c1c1e;background:#fff}
+code{background:#f2f2f7;padding:.15em .4em;border-radius:4px;font-size:.92em}pre{background:#f2f2f7;padding:12px;border-radius:8px;overflow:auto;font-size:13px}
+h1{font-size:24px}h2{font-size:18px;margin-top:28px}li{margin:.2em 0}small{color:#6e6e73}</style></head><body>
+<h1>noir-phone 追踪域名黑名单</h1>
+<p><small>生成于 2026-11-07 · HONOR BKQ-AN20 / Android 17 · 共 205 条可拦 + 17 条谨慎</small></p>
+<p>一台手机上的 374 个安装包，逐个 APK 解 <code>classes*.dex</code> 与 <code>resources.arsc</code>，抽出 URL 与裸域名，
+再按 <a href="https://github.com/Verlintas/NOIR">Verlintas/NOIR</a> 的规则（域名 label 分类）判断哪些是遥测/广告/崩溃上报。</p>
+<h2>订阅地址</h2>
+<pre>https://verchiel666.github.io/android-sandbox-notes/blocklist/noir-trackers.txt      # AdGuard / AdGuard Home
+https://verchiel666.github.io/android-sandbox-notes/blocklist/noir-trackers.hosts     # hosts
+https://verchiel666.github.io/android-sandbox-notes/blocklist/noir-trackers-dnsmasq.conf  # OpenWrt dnsmasq
+https://verchiel666.github.io/android-sandbox-notes/blocklist/noir-caution.txt        # 谨慎档（默认不拦）
+https://verchiel666.github.io/android-sandbox-notes/blocklist/noir-blocklist.json     # 机器可读</pre>
+<h2>怎么用</h2>
+<ul>
+<li><b>AdGuard / AdGuard Home</b>：过滤器 → 自定义规则 → 粘贴 <code>noir-trackers.txt</code> 全文；或加订阅 URL。</li>
+<li><b>OpenWrt</b>：<code>noir-trackers-dnsmasq.conf</code> 丢进 <code>/etc/dnsmasq.d/</code> 后重启 dnsmasq。</li>
+<li><b>hosts</b>：合并进系统的 hosts 文件。</li>
+</ul>
+<h2>口径（不吹不黑）</h2>
+<ul>
+<li>这是<b>静态证据</b>：APK 里存在这个域名字符串 → 该域名被判为遥测类。<b>不代表</b>特定传输真的发生过。</li>
+<li>拦了可能有个别 App 功能异常（某些"统计"域名实际承载配置下发），出问题从 <code>noir-caution.txt</code> 反查、逐条放行。</li>
+<li>支付/登录/推送/验证码（如 <code>static.geetest.com</code>）已经划进谨慎档，默认<b>不拦</b>。</li>
+<li>清单随每日审计自动重生成，更新方式是重新发布这个页面。</li>
+</ul>
+<p><small>规则移植自 <a href="https://github.com/Verlintas/NOIR">Verlintas/NOIR</a>（MIT）。</small></p>
+</body></html>
