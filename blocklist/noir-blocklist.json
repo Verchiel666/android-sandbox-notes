@@ -1,21 +1,21 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-07T03:55:45.605Z",
+ "generatedAt": "2026-11-08T02:32:00.825Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
-  "total_trackers": 222,
-  "blocked": 205,
+  "total_trackers": 221,
+  "blocked": 204,
   "caution": 17
  },
  "entries": [
   {
    "host": "metrics-drcn.dt.hihonorcloud.com",
-   "apps": 56
+   "apps": 57
   },
   {
    "host": "cgi.qplus.com",
-   "apps": 30
+   "apps": 29
   },
   {
    "host": "metrics-ad-drcn.dt.hihonorcloud.com",
@@ -114,10 +114,6 @@
    "apps": 4
   },
   {
-   "host": "aweme.snssdk.com",
-   "apps": 4
-  },
-  {
    "host": "norma-external-collect.meizu.com",
    "apps": 4
   },
@@ -147,6 +143,10 @@
   },
   {
    "host": "metrics.dt.hihonorcloud.com",
+   "apps": 3
+  },
+  {
+   "host": "aweme.snssdk.com",
    "apps": 3
   },
   {
@@ -443,10 +443,6 @@
   },
   {
    "host": "updatereport.platform.hihonorcloud.com",
-   "apps": 1
-  },
-  {
-   "host": "aweme-lq.snssdk.com",
    "apps": 1
   },
   {
