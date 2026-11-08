@@ -1,4 +1,4 @@
-# noir-phone tracker blocklist — 2026-11-07
+# noir-phone tracker blocklist — 2026-11-08
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
@@ -25,7 +25,6 @@
 0.0.0.0 rtlog.snssdk.com
 0.0.0.0 abtest-ch.snssdk.com
 0.0.0.0 ad.zijieapi.com
-0.0.0.0 aweme.snssdk.com
 0.0.0.0 norma-external-collect.meizu.com
 0.0.0.0 alogsus.umeng.com
 0.0.0.0 alogus.umeng.com
@@ -34,6 +33,7 @@
 0.0.0.0 ccs.umeng.com
 0.0.0.0 metrics-drru.dt.hihonorcloud.com
 0.0.0.0 metrics.dt.hihonorcloud.com
+0.0.0.0 aweme.snssdk.com
 0.0.0.0 ecom.snssdk.com
 0.0.0.0 effect.snssdk.com
 0.0.0.0 frontier.snssdk.com
@@ -108,7 +108,6 @@
 0.0.0.0 updatereport-dre.platform.hihonorcloud.com
 0.0.0.0 updatereport-drru.platform.hihonorcloud.com
 0.0.0.0 updatereport.platform.hihonorcloud.com
-0.0.0.0 aweme-lq.snssdk.com
 0.0.0.0 ad.oceanengine.com
 0.0.0.0 i-hl.snssdk.com
 0.0.0.0 imapi.snssdk.com
