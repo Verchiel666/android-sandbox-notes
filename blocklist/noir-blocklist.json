@@ -1,6 +1,6 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-08T02:32:00.825Z",
+ "generatedAt": "2026-11-09T02:32:35.276Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
