@@ -1,4 +1,4 @@
-! noir-phone tracker blocklist — 2026-11-08
+! noir-phone tracker blocklist — 2026-11-09
 ! 来源：本机 374 个安装包 / 221 个 TRACKER 域名中筛出 204 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
