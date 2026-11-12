@@ -1,4 +1,4 @@
-! noir-phone tracker blocklist — 2026-11-11
+! noir-phone tracker blocklist — 2026-11-12
 ! 来源：本机 374 个安装包 / 221 个 TRACKER 域名中筛出 204 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
@@ -8,31 +8,33 @@ metrics-ad-drcn.dt.hihonorcloud.com
 applog.snssdk.com
 apmplus.volces.com
 ad.toutiao.com
+applog.bytedance.net
+apps.oceanengine.com
 applog.uc.cn
 gjapplog.ucweb.com
 applog.zijieapi.com
-applog.bytedance.net
-apps.oceanengine.com
 log.snssdk.com
+i.snssdk.com
 developer.umeng.com
 ichannel.snssdk.com
 metrics-test-drcn.dt.hihonorcloud.com
-i.snssdk.com
 aspect-upush.umeng.com
 applog.lc.quark.cn
+rtapplog.snssdk.com
+rtlog.snssdk.com
 manual.sensorsdata.cn
 api.snssdk.com
 cnlogs.umeng.com
 h-adashx.ut.taobao.com
-rtapplog.snssdk.com
-rtlog.snssdk.com
 abtest-ch.snssdk.com
 ad.zijieapi.com
 norma-external-collect.meizu.com
 alogsus.umeng.com
 alogus.umeng.com
+success.ctobsnssdk.com
 tobapplog.ctobsnssdk.com
 toblog.ctobsnssdk.com
+www.pangle.cn
 ccs.umeng.com
 metrics-drru.dt.hihonorcloud.com
 metrics.dt.hihonorcloud.com
@@ -42,8 +44,6 @@ effect.snssdk.com
 frontier.snssdk.com
 static.doubleclick.net
 is.snssdk.com
-success.ctobsnssdk.com
-www.pangle.cn
 log.umsns.com
 pslog.umeng.com
 ucc.umeng.com
