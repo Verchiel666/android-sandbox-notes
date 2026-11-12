@@ -1,13 +1,15 @@
 ! noir-phone tracker blocklist — 2026-11-12
-! 来源：本机 374 个安装包 / 221 个 TRACKER 域名中筛出 204 个
+! 来源：本机 374 个安装包 / 224 个 TRACKER 域名中筛出 207 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
 metrics-drcn.dt.hihonorcloud.com
 cgi.qplus.com
 metrics-ad-drcn.dt.hihonorcloud.com
 applog.snssdk.com
+api-access.pangolin-sdk-toutiao.com
 apmplus.volces.com
 ad.toutiao.com
+5log-api.pangolin-sdk-toutiao-b.com
 applog.bytedance.net
 apps.oceanengine.com
 applog.uc.cn
@@ -81,6 +83,7 @@ oauth2.umeng.com
 resolve.umeng.com
 sss.umeng.com
 ad.maoyan.com
+3log-api.pangolin-sdk-toutiao.com
 app-monitor.ele.me
 collect.ux.21cn.com
 ads.youtube.com
