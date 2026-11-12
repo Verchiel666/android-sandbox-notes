@@ -3,8 +3,10 @@
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
 0.0.0.0 applog.snssdk.com
+0.0.0.0 api-access.pangolin-sdk-toutiao.com
 0.0.0.0 apmplus.volces.com
 0.0.0.0 ad.toutiao.com
+0.0.0.0 5log-api.pangolin-sdk-toutiao-b.com
 0.0.0.0 applog.bytedance.net
 0.0.0.0 apps.oceanengine.com
 0.0.0.0 applog.uc.cn
@@ -78,6 +80,7 @@
 0.0.0.0 resolve.umeng.com
 0.0.0.0 sss.umeng.com
 0.0.0.0 ad.maoyan.com
+0.0.0.0 3log-api.pangolin-sdk-toutiao.com
 0.0.0.0 app-monitor.ele.me
 0.0.0.0 collect.ux.21cn.com
 0.0.0.0 ads.youtube.com
