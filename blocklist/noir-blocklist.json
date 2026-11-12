@@ -1,11 +1,11 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-12T02:32:23.176Z",
+ "generatedAt": "2026-11-12T02:40:45.662Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
-  "total_trackers": 221,
-  "blocked": 204,
+  "total_trackers": 224,
+  "blocked": 207,
   "caution": 17
  },
  "entries": [
@@ -26,12 +26,20 @@
    "apps": 14
   },
   {
+   "host": "api-access.pangolin-sdk-toutiao.com",
+   "apps": 13
+  },
+  {
    "host": "apmplus.volces.com",
    "apps": 13
   },
   {
    "host": "ad.toutiao.com",
    "apps": 12
+  },
+  {
+   "host": "5log-api.pangolin-sdk-toutiao-b.com",
+   "apps": 10
   },
   {
    "host": "applog.bytedance.net",
@@ -323,6 +331,10 @@
   },
   {
    "host": "ad.maoyan.com",
+   "apps": 2
+  },
+  {
+   "host": "3log-api.pangolin-sdk-toutiao.com",
    "apps": 2
   },
   {
