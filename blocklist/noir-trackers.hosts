@@ -1,30 +1,30 @@
-# noir-phone tracker blocklist — 2026-11-12
+# noir-phone tracker blocklist — 2026-11-13
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
-0.0.0.0 applog.snssdk.com
 0.0.0.0 api-access.pangolin-sdk-toutiao.com
+0.0.0.0 applog.snssdk.com
 0.0.0.0 apmplus.volces.com
 0.0.0.0 ad.toutiao.com
-0.0.0.0 5log-api.pangolin-sdk-toutiao-b.com
-0.0.0.0 applog.bytedance.net
-0.0.0.0 apps.oceanengine.com
 0.0.0.0 applog.uc.cn
 0.0.0.0 gjapplog.ucweb.com
 0.0.0.0 applog.zijieapi.com
+0.0.0.0 5log-api.pangolin-sdk-toutiao-b.com
+0.0.0.0 applog.bytedance.net
+0.0.0.0 apps.oceanengine.com
 0.0.0.0 log.snssdk.com
 0.0.0.0 i.snssdk.com
 0.0.0.0 developer.umeng.com
 0.0.0.0 ichannel.snssdk.com
 0.0.0.0 metrics-test-drcn.dt.hihonorcloud.com
-0.0.0.0 aspect-upush.umeng.com
 0.0.0.0 applog.lc.quark.cn
+0.0.0.0 aspect-upush.umeng.com
 0.0.0.0 rtapplog.snssdk.com
 0.0.0.0 rtlog.snssdk.com
 0.0.0.0 manual.sensorsdata.cn
 0.0.0.0 api.snssdk.com
-0.0.0.0 cnlogs.umeng.com
 0.0.0.0 h-adashx.ut.taobao.com
+0.0.0.0 cnlogs.umeng.com
 0.0.0.0 abtest-ch.snssdk.com
 0.0.0.0 ad.zijieapi.com
 0.0.0.0 norma-external-collect.meizu.com
@@ -43,6 +43,7 @@
 0.0.0.0 frontier.snssdk.com
 0.0.0.0 static.doubleclick.net
 0.0.0.0 is.snssdk.com
+0.0.0.0 applog-perf.uc.cn
 0.0.0.0 log.umsns.com
 0.0.0.0 pslog.umeng.com
 0.0.0.0 ucc.umeng.com
@@ -55,7 +56,6 @@
 0.0.0.0 dreport.meituan.net
 0.0.0.0 live-monitor-broker.inf.st.sankuai.com
 0.0.0.0 log.tec73.com
-0.0.0.0 applog-perf.uc.cn
 0.0.0.0 metrics-basecloud-drcn.dt.hihonorcloud.com
 0.0.0.0 google-analytics.com
 0.0.0.0 toblog-alink.ctobsnssdk.com
@@ -67,13 +67,13 @@
 0.0.0.0 clue.oceanengine.com
 0.0.0.0 dpprofile.snssdk.com
 0.0.0.0 jsb.snssdk.com
+0.0.0.0 adtrack.ucweb.com
 0.0.0.0 errnewlog.umeng.com
 0.0.0.0 errnewlogos.umeng.com
 0.0.0.0 abtest.volceapplog.com
 0.0.0.0 klink.volceapplog.com
 0.0.0.0 tobapplog.volceapplog.com
 0.0.0.0 toblog.volceapplog.com
-0.0.0.0 adtrack.ucweb.com
 0.0.0.0 www.umeng.com
 0.0.0.0 mobile.umeng.com
 0.0.0.0 oauth2.umeng.com
@@ -114,6 +114,9 @@
 0.0.0.0 ad.oceanengine.com
 0.0.0.0 i-hl.snssdk.com
 0.0.0.0 imapi.snssdk.com
+0.0.0.0 adashx4yt.m.taobao.com
+0.0.0.0 gj.track.uc.cn
+0.0.0.0 log.yolinkmob.com
 0.0.0.0 adx-bj.statisticslinks.com
 0.0.0.0 adx-strategy-api-cn.statisticslinks.com
 0.0.0.0 adx-tk-sz.statisticslinks.com
@@ -122,8 +125,6 @@
 0.0.0.0 log.ys7.com
 0.0.0.0 statistic.live.126.net
 0.0.0.0 tracking.v.tf.360.cn
-0.0.0.0 alink.volceapplog.com
-0.0.0.0 log-api.oceanengine.com
 0.0.0.0 click.log.z3.cn
 0.0.0.0 log.ireader.com
 0.0.0.0 aaid.umeng.com
@@ -137,6 +138,8 @@
 0.0.0.0 dflow.log.hunantv.com
 0.0.0.0 dolphin.log.mgtv.com
 0.0.0.0 static.ymm56.com
+0.0.0.0 alink.volceapplog.com
+0.0.0.0 log-api.oceanengine.com
 0.0.0.0 anti-sdk-report-pre.m.jd.com
 0.0.0.0 anti-sdk-report.m.jd.com
 0.0.0.0 deeplink.umeng.com
@@ -171,9 +174,6 @@
 0.0.0.0 audid.umeng.com
 0.0.0.0 h.cn-wulanchabu.log.aliyuncs.com
 0.0.0.0 aes-1.cn-wulanchabu.log.aliyuncs.com
-0.0.0.0 adashx4yt.m.taobao.com
-0.0.0.0 gj.track.uc.cn
-0.0.0.0 log.yolinkmob.com
 0.0.0.0 apmlog.snssdk.com
 0.0.0.0 cmonitor.iqiyi.com
 0.0.0.0 ping-monitor.shouji.sogou.com
