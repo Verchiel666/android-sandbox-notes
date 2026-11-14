@@ -1,11 +1,11 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-13T02:36:53.915Z",
+ "generatedAt": "2026-11-14T07:10:26.831Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
-  "total_trackers": 224,
-  "blocked": 207,
+  "total_trackers": 225,
+  "blocked": 208,
   "caution": 17
  },
  "entries": [
@@ -38,16 +38,16 @@
    "apps": 11
   },
   {
+   "host": "applog.zijieapi.com",
+   "apps": 10
+  },
+  {
    "host": "applog.uc.cn",
    "apps": 10
   },
   {
    "host": "gjapplog.ucweb.com",
    "apps": 10
-  },
-  {
-   "host": "applog.zijieapi.com",
-   "apps": 9
   },
   {
    "host": "5log-api.pangolin-sdk-toutiao-b.com",
@@ -82,11 +82,15 @@
    "apps": 6
   },
   {
-   "host": "applog.lc.quark.cn",
+   "host": "manual.sensorsdata.cn",
    "apps": 6
   },
   {
    "host": "aspect-upush.umeng.com",
+   "apps": 6
+  },
+  {
+   "host": "applog.lc.quark.cn",
    "apps": 6
   },
   {
@@ -98,19 +102,15 @@
    "apps": 5
   },
   {
-   "host": "manual.sensorsdata.cn",
-   "apps": 5
-  },
-  {
    "host": "api.snssdk.com",
    "apps": 5
   },
   {
-   "host": "h-adashx.ut.taobao.com",
+   "host": "cnlogs.umeng.com",
    "apps": 5
   },
   {
-   "host": "cnlogs.umeng.com",
+   "host": "h-adashx.ut.taobao.com",
    "apps": 5
   },
   {
@@ -186,10 +186,6 @@
    "apps": 3
   },
   {
-   "host": "applog-perf.uc.cn",
-   "apps": 3
-  },
-  {
    "host": "log.umsns.com",
    "apps": 3
   },
@@ -238,6 +234,10 @@
    "apps": 3
   },
   {
+   "host": "applog-perf.uc.cn",
+   "apps": 3
+  },
+  {
    "host": "metrics-basecloud-drcn.dt.hihonorcloud.com",
    "apps": 3
   },
@@ -251,6 +251,10 @@
   },
   {
    "host": "metrics-dre.dt.hihonorcloud.com",
+   "apps": 2
+  },
+  {
+   "host": "metrics1.data.hicloud.com",
    "apps": 2
   },
   {
@@ -282,15 +286,15 @@
    "apps": 2
   },
   {
-   "host": "adtrack.ucweb.com",
-   "apps": 2
-  },
-  {
    "host": "errnewlog.umeng.com",
    "apps": 2
   },
   {
    "host": "errnewlogos.umeng.com",
+   "apps": 2
+  },
+  {
+   "host": "adtrack.ucweb.com",
    "apps": 2
   },
   {
@@ -355,10 +359,6 @@
   },
   {
    "host": "vodreport.qcloud.com",
-   "apps": 1
-  },
-  {
-   "host": "metrics1.data.hicloud.com",
    "apps": 1
   },
   {
@@ -467,18 +467,6 @@
   },
   {
    "host": "imapi.snssdk.com",
-   "apps": 1
-  },
-  {
-   "host": "adashx4yt.m.taobao.com",
-   "apps": 1
-  },
-  {
-   "host": "gj.track.uc.cn",
-   "apps": 1
-  },
-  {
-   "host": "log.yolinkmob.com",
    "apps": 1
   },
   {
@@ -654,6 +642,18 @@
    "apps": 1
   },
   {
+   "host": "adashx4yt.m.taobao.com",
+   "apps": 1
+  },
+  {
+   "host": "gj.track.uc.cn",
+   "apps": 1
+  },
+  {
+   "host": "log.yolinkmob.com",
+   "apps": 1
+  },
+  {
    "host": "data.altbeacon.org",
    "apps": 1
   },
@@ -735,6 +735,10 @@
   },
   {
    "host": "adtrack.xiaojukeji.com",
+   "apps": 1
+  },
+  {
+   "host": "analytics.95516.com",
    "apps": 1
   },
   {
