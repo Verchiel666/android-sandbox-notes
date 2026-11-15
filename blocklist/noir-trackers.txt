@@ -1,5 +1,5 @@
-! noir-phone tracker blocklist — 2026-11-14
-! 来源：本机 374 个安装包 / 225 个 TRACKER 域名中筛出 208 个
+! noir-phone tracker blocklist — 2026-11-15
+! 来源：本机 374 个安装包 / 224 个 TRACKER 域名中筛出 207 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
 metrics-drcn.dt.hihonorcloud.com
@@ -20,11 +20,11 @@ i.snssdk.com
 developer.umeng.com
 ichannel.snssdk.com
 metrics-test-drcn.dt.hihonorcloud.com
-manual.sensorsdata.cn
 aspect-upush.umeng.com
 applog.lc.quark.cn
 rtapplog.snssdk.com
 rtlog.snssdk.com
+manual.sensorsdata.cn
 api.snssdk.com
 cnlogs.umeng.com
 h-adashx.ut.taobao.com
@@ -63,7 +63,6 @@ metrics-basecloud-drcn.dt.hihonorcloud.com
 google-analytics.com
 toblog-alink.ctobsnssdk.com
 metrics-dre.dt.hihonorcloud.com
-metrics1.data.hicloud.com
 b.stats.paypal.com
 athena-api.oceanengine.com
 ib.snssdk.com
@@ -90,6 +89,7 @@ collect.ux.21cn.com
 ads.youtube.com
 www.google-analytics.com
 vodreport.qcloud.com
+metrics1.data.hicloud.com
 crash.163.com
 static.feibotong.com
 ads.tiktok.com
@@ -184,7 +184,6 @@ app-monitor.ar.elenet.me
 usertrack.alibaba-inc.com
 tracking.svc-nue.pushwoosh.com
 adtrack.xiaojukeji.com
-analytics.95516.com
 app.appsflyer.com
 fp-it-tracker.fengkongcloud.com
 static.deepseek.com
