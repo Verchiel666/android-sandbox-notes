@@ -1,4 +1,4 @@
-# noir-phone tracker blocklist — 2026-11-14
+# noir-phone tracker blocklist — 2026-11-15
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
@@ -17,11 +17,11 @@
 0.0.0.0 developer.umeng.com
 0.0.0.0 ichannel.snssdk.com
 0.0.0.0 metrics-test-drcn.dt.hihonorcloud.com
-0.0.0.0 manual.sensorsdata.cn
 0.0.0.0 aspect-upush.umeng.com
 0.0.0.0 applog.lc.quark.cn
 0.0.0.0 rtapplog.snssdk.com
 0.0.0.0 rtlog.snssdk.com
+0.0.0.0 manual.sensorsdata.cn
 0.0.0.0 api.snssdk.com
 0.0.0.0 cnlogs.umeng.com
 0.0.0.0 h-adashx.ut.taobao.com
@@ -60,7 +60,6 @@
 0.0.0.0 google-analytics.com
 0.0.0.0 toblog-alink.ctobsnssdk.com
 0.0.0.0 metrics-dre.dt.hihonorcloud.com
-0.0.0.0 metrics1.data.hicloud.com
 0.0.0.0 b.stats.paypal.com
 0.0.0.0 athena-api.oceanengine.com
 0.0.0.0 ib.snssdk.com
@@ -87,6 +86,7 @@
 0.0.0.0 ads.youtube.com
 0.0.0.0 www.google-analytics.com
 0.0.0.0 vodreport.qcloud.com
+0.0.0.0 metrics1.data.hicloud.com
 0.0.0.0 crash.163.com
 0.0.0.0 static.feibotong.com
 0.0.0.0 ads.tiktok.com
@@ -181,7 +181,6 @@
 0.0.0.0 usertrack.alibaba-inc.com
 0.0.0.0 tracking.svc-nue.pushwoosh.com
 0.0.0.0 adtrack.xiaojukeji.com
-0.0.0.0 analytics.95516.com
 0.0.0.0 app.appsflyer.com
 0.0.0.0 fp-it-tracker.fengkongcloud.com
 0.0.0.0 static.deepseek.com
