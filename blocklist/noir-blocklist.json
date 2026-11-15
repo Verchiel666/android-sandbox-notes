@@ -1,11 +1,11 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-14T07:10:26.831Z",
+ "generatedAt": "2026-11-15T02:30:55.607Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
-  "total_trackers": 225,
-  "blocked": 208,
+  "total_trackers": 224,
+  "blocked": 207,
   "caution": 17
  },
  "entries": [
@@ -82,10 +82,6 @@
    "apps": 6
   },
   {
-   "host": "manual.sensorsdata.cn",
-   "apps": 6
-  },
-  {
    "host": "aspect-upush.umeng.com",
    "apps": 6
   },
@@ -99,6 +95,10 @@
   },
   {
    "host": "rtlog.snssdk.com",
+   "apps": 5
+  },
+  {
+   "host": "manual.sensorsdata.cn",
    "apps": 5
   },
   {
@@ -254,10 +254,6 @@
    "apps": 2
   },
   {
-   "host": "metrics1.data.hicloud.com",
-   "apps": 2
-  },
-  {
    "host": "b.stats.paypal.com",
    "apps": 2
   },
@@ -359,6 +355,10 @@
   },
   {
    "host": "vodreport.qcloud.com",
+   "apps": 1
+  },
+  {
+   "host": "metrics1.data.hicloud.com",
    "apps": 1
   },
   {
@@ -735,10 +735,6 @@
   },
   {
    "host": "adtrack.xiaojukeji.com",
-   "apps": 1
-  },
-  {
-   "host": "analytics.95516.com",
    "apps": 1
   },
   {
