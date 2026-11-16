@@ -1,4 +1,4 @@
-# noir-phone tracker blocklist — 2026-11-15
+# noir-phone tracker blocklist — 2026-11-16
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
@@ -43,18 +43,18 @@
 0.0.0.0 frontier.snssdk.com
 0.0.0.0 static.doubleclick.net
 0.0.0.0 is.snssdk.com
-0.0.0.0 log.umsns.com
-0.0.0.0 pslog.umeng.com
-0.0.0.0 ucc.umeng.com
-0.0.0.0 ulogs.umeng.com
-0.0.0.0 ulogs.umengcloud.com
-0.0.0.0 utoken.umeng.com
 0.0.0.0 ad.e.waimai.sankuai.com
 0.0.0.0 babel-statistics-android.dreport.meituan.net
 0.0.0.0 babel-statistics-android.dreport.zservey.com
 0.0.0.0 dreport.meituan.net
 0.0.0.0 live-monitor-broker.inf.st.sankuai.com
 0.0.0.0 log.tec73.com
+0.0.0.0 log.umsns.com
+0.0.0.0 pslog.umeng.com
+0.0.0.0 ucc.umeng.com
+0.0.0.0 ulogs.umeng.com
+0.0.0.0 ulogs.umengcloud.com
+0.0.0.0 utoken.umeng.com
 0.0.0.0 applog-perf.uc.cn
 0.0.0.0 metrics-basecloud-drcn.dt.hihonorcloud.com
 0.0.0.0 google-analytics.com
@@ -69,6 +69,7 @@
 0.0.0.0 jsb.snssdk.com
 0.0.0.0 errnewlog.umeng.com
 0.0.0.0 errnewlogos.umeng.com
+0.0.0.0 ad.maoyan.com
 0.0.0.0 adtrack.ucweb.com
 0.0.0.0 abtest.volceapplog.com
 0.0.0.0 klink.volceapplog.com
@@ -79,7 +80,6 @@
 0.0.0.0 oauth2.umeng.com
 0.0.0.0 resolve.umeng.com
 0.0.0.0 sss.umeng.com
-0.0.0.0 ad.maoyan.com
 0.0.0.0 3log-api.pangolin-sdk-toutiao.com
 0.0.0.0 app-monitor.ele.me
 0.0.0.0 collect.ux.21cn.com
