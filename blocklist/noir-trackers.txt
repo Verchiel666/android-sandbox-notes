@@ -1,4 +1,4 @@
-! noir-phone tracker blocklist — 2026-11-15
+! noir-phone tracker blocklist — 2026-11-16
 ! 来源：本机 374 个安装包 / 224 个 TRACKER 域名中筛出 207 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
@@ -46,18 +46,18 @@ effect.snssdk.com
 frontier.snssdk.com
 static.doubleclick.net
 is.snssdk.com
-log.umsns.com
-pslog.umeng.com
-ucc.umeng.com
-ulogs.umeng.com
-ulogs.umengcloud.com
-utoken.umeng.com
 ad.e.waimai.sankuai.com
 babel-statistics-android.dreport.meituan.net
 babel-statistics-android.dreport.zservey.com
 dreport.meituan.net
 live-monitor-broker.inf.st.sankuai.com
 log.tec73.com
+log.umsns.com
+pslog.umeng.com
+ucc.umeng.com
+ulogs.umeng.com
+ulogs.umengcloud.com
+utoken.umeng.com
 applog-perf.uc.cn
 metrics-basecloud-drcn.dt.hihonorcloud.com
 google-analytics.com
@@ -72,6 +72,7 @@ dpprofile.snssdk.com
 jsb.snssdk.com
 errnewlog.umeng.com
 errnewlogos.umeng.com
+ad.maoyan.com
 adtrack.ucweb.com
 abtest.volceapplog.com
 klink.volceapplog.com
@@ -82,7 +83,6 @@ mobile.umeng.com
 oauth2.umeng.com
 resolve.umeng.com
 sss.umeng.com
-ad.maoyan.com
 3log-api.pangolin-sdk-toutiao.com
 app-monitor.ele.me
 collect.ux.21cn.com
