@@ -1,4 +1,4 @@
-! noir-phone tracker blocklist — 2026-11-16
+! noir-phone tracker blocklist — 2026-11-17
 ! 来源：本机 374 个安装包 / 224 个 TRACKER 域名中筛出 207 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
@@ -15,10 +15,10 @@ gjapplog.ucweb.com
 5log-api.pangolin-sdk-toutiao-b.com
 applog.bytedance.net
 apps.oceanengine.com
-log.snssdk.com
 i.snssdk.com
 developer.umeng.com
 ichannel.snssdk.com
+log.snssdk.com
 metrics-test-drcn.dt.hihonorcloud.com
 aspect-upush.umeng.com
 applog.lc.quark.cn
@@ -30,6 +30,7 @@ cnlogs.umeng.com
 h-adashx.ut.taobao.com
 abtest-ch.snssdk.com
 ad.zijieapi.com
+aweme.snssdk.com
 norma-external-collect.meizu.com
 alogsus.umeng.com
 alogus.umeng.com
@@ -40,7 +41,6 @@ www.pangle.cn
 ccs.umeng.com
 metrics-drru.dt.hihonorcloud.com
 metrics.dt.hihonorcloud.com
-aweme.snssdk.com
 ecom.snssdk.com
 effect.snssdk.com
 frontier.snssdk.com
@@ -72,8 +72,8 @@ dpprofile.snssdk.com
 jsb.snssdk.com
 errnewlog.umeng.com
 errnewlogos.umeng.com
-ad.maoyan.com
 adtrack.ucweb.com
+ad.maoyan.com
 abtest.volceapplog.com
 klink.volceapplog.com
 tobapplog.volceapplog.com
@@ -114,6 +114,7 @@ updatereport-drcn.platform.hihonorcloud.com
 updatereport-dre.platform.hihonorcloud.com
 updatereport-drru.platform.hihonorcloud.com
 updatereport.platform.hihonorcloud.com
+aweme-lq.snssdk.com
 ad.oceanengine.com
 i-hl.snssdk.com
 imapi.snssdk.com
@@ -126,7 +127,6 @@ log.ys7.com
 statistic.live.126.net
 tracking.v.tf.360.cn
 click.log.z3.cn
-log.ireader.com
 aaid.umeng.com
 api.log.mgtv.com
 apm.log.hunantv.com
