@@ -1,6 +1,6 @@
 # 谨慎档：含 pay/bank/login/push/验证码 关键词或与功能域名同源，默认不拦
-huatuocode.huatuo.qq.com	8
 analytics.map.qq.com	7
+huatuocode.huatuo.qq.com	7
 log.wechatpay.cn	4
 ads.privacy.qq.com	4
 otheve.beacon.qq.com	3
