@@ -1,4 +1,4 @@
-# noir-phone tracker blocklist — 2026-11-16
+# noir-phone tracker blocklist — 2026-11-17
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
@@ -12,10 +12,10 @@
 0.0.0.0 5log-api.pangolin-sdk-toutiao-b.com
 0.0.0.0 applog.bytedance.net
 0.0.0.0 apps.oceanengine.com
-0.0.0.0 log.snssdk.com
 0.0.0.0 i.snssdk.com
 0.0.0.0 developer.umeng.com
 0.0.0.0 ichannel.snssdk.com
+0.0.0.0 log.snssdk.com
 0.0.0.0 metrics-test-drcn.dt.hihonorcloud.com
 0.0.0.0 aspect-upush.umeng.com
 0.0.0.0 applog.lc.quark.cn
@@ -27,6 +27,7 @@
 0.0.0.0 h-adashx.ut.taobao.com
 0.0.0.0 abtest-ch.snssdk.com
 0.0.0.0 ad.zijieapi.com
+0.0.0.0 aweme.snssdk.com
 0.0.0.0 norma-external-collect.meizu.com
 0.0.0.0 alogsus.umeng.com
 0.0.0.0 alogus.umeng.com
@@ -37,7 +38,6 @@
 0.0.0.0 ccs.umeng.com
 0.0.0.0 metrics-drru.dt.hihonorcloud.com
 0.0.0.0 metrics.dt.hihonorcloud.com
-0.0.0.0 aweme.snssdk.com
 0.0.0.0 ecom.snssdk.com
 0.0.0.0 effect.snssdk.com
 0.0.0.0 frontier.snssdk.com
@@ -69,8 +69,8 @@
 0.0.0.0 jsb.snssdk.com
 0.0.0.0 errnewlog.umeng.com
 0.0.0.0 errnewlogos.umeng.com
-0.0.0.0 ad.maoyan.com
 0.0.0.0 adtrack.ucweb.com
+0.0.0.0 ad.maoyan.com
 0.0.0.0 abtest.volceapplog.com
 0.0.0.0 klink.volceapplog.com
 0.0.0.0 tobapplog.volceapplog.com
@@ -111,6 +111,7 @@
 0.0.0.0 updatereport-dre.platform.hihonorcloud.com
 0.0.0.0 updatereport-drru.platform.hihonorcloud.com
 0.0.0.0 updatereport.platform.hihonorcloud.com
+0.0.0.0 aweme-lq.snssdk.com
 0.0.0.0 ad.oceanengine.com
 0.0.0.0 i-hl.snssdk.com
 0.0.0.0 imapi.snssdk.com
@@ -123,7 +124,6 @@
 0.0.0.0 statistic.live.126.net
 0.0.0.0 tracking.v.tf.360.cn
 0.0.0.0 click.log.z3.cn
-0.0.0.0 log.ireader.com
 0.0.0.0 aaid.umeng.com
 0.0.0.0 api.log.mgtv.com
 0.0.0.0 apm.log.hunantv.com
