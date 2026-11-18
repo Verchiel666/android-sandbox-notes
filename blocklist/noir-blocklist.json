@@ -1,11 +1,11 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-17T02:33:06.334Z",
+ "generatedAt": "2026-11-18T02:34:20.265Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
-  "total_trackers": 224,
-  "blocked": 207,
+  "total_trackers": 222,
+  "blocked": 205,
   "caution": 17
  },
  "entries": [
@@ -31,7 +31,7 @@
   },
   {
    "host": "apmplus.volces.com",
-   "apps": 12
+   "apps": 11
   },
   {
    "host": "ad.toutiao.com",
@@ -298,22 +298,6 @@
    "apps": 2
   },
   {
-   "host": "abtest.volceapplog.com",
-   "apps": 2
-  },
-  {
-   "host": "klink.volceapplog.com",
-   "apps": 2
-  },
-  {
-   "host": "tobapplog.volceapplog.com",
-   "apps": 2
-  },
-  {
-   "host": "toblog.volceapplog.com",
-   "apps": 2
-  },
-  {
    "host": "www.umeng.com",
    "apps": 2
   },
@@ -554,11 +538,27 @@
    "apps": 1
   },
   {
+   "host": "abtest.volceapplog.com",
+   "apps": 1
+  },
+  {
    "host": "alink.volceapplog.com",
    "apps": 1
   },
   {
+   "host": "klink.volceapplog.com",
+   "apps": 1
+  },
+  {
    "host": "log-api.oceanengine.com",
+   "apps": 1
+  },
+  {
+   "host": "tobapplog.volceapplog.com",
+   "apps": 1
+  },
+  {
+   "host": "toblog.volceapplog.com",
    "apps": 1
   },
   {
@@ -614,6 +614,18 @@
    "apps": 1
   },
   {
+   "host": "adashx4yt.m.taobao.com",
+   "apps": 1
+  },
+  {
+   "host": "gj.track.uc.cn",
+   "apps": 1
+  },
+  {
+   "host": "log.yolinkmob.com",
+   "apps": 1
+  },
+  {
    "host": "a.tracking.yangkeduo.com",
    "apps": 1
   },
@@ -639,18 +651,6 @@
   },
   {
    "host": "static.122.gov.cn",
-   "apps": 1
-  },
-  {
-   "host": "adashx4yt.m.taobao.com",
-   "apps": 1
-  },
-  {
-   "host": "gj.track.uc.cn",
-   "apps": 1
-  },
-  {
-   "host": "log.yolinkmob.com",
    "apps": 1
   },
   {
@@ -739,14 +739,6 @@
   },
   {
    "host": "app.appsflyer.com",
-   "apps": 1
-  },
-  {
-   "host": "fp-it-tracker.fengkongcloud.com",
-   "apps": 1
-  },
-  {
-   "host": "static.deepseek.com",
    "apps": 1
   },
   {
