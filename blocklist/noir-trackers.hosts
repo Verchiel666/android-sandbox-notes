@@ -1,4 +1,4 @@
-# noir-phone tracker blocklist — 2026-11-18
+# noir-phone tracker blocklist — 2026-11-19
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
@@ -150,9 +150,6 @@
 0.0.0.0 ad.wx.com
 0.0.0.0 www.dktest-mmcrash.com
 0.0.0.0 statres.quickapp.cn
-0.0.0.0 adashx4yt.m.taobao.com
-0.0.0.0 gj.track.uc.cn
-0.0.0.0 log.yolinkmob.com
 0.0.0.0 a.tracking.yangkeduo.com
 0.0.0.0 bugreport.bangcle.com
 0.0.0.0 data-sdk-uuid-report.dreport.meituan.net
@@ -174,6 +171,9 @@
 0.0.0.0 audid.umeng.com
 0.0.0.0 h.cn-wulanchabu.log.aliyuncs.com
 0.0.0.0 aes-1.cn-wulanchabu.log.aliyuncs.com
+0.0.0.0 adashx4yt.m.taobao.com
+0.0.0.0 gj.track.uc.cn
+0.0.0.0 log.yolinkmob.com
 0.0.0.0 apmlog.snssdk.com
 0.0.0.0 cmonitor.iqiyi.com
 0.0.0.0 ping-monitor.shouji.sogou.com
