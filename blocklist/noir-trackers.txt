@@ -1,4 +1,4 @@
-! noir-phone tracker blocklist — 2026-11-18
+! noir-phone tracker blocklist — 2026-11-19
 ! 来源：本机 374 个安装包 / 222 个 TRACKER 域名中筛出 205 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
@@ -153,9 +153,6 @@ ssp.ads.umeng.com
 ad.wx.com
 www.dktest-mmcrash.com
 statres.quickapp.cn
-adashx4yt.m.taobao.com
-gj.track.uc.cn
-log.yolinkmob.com
 a.tracking.yangkeduo.com
 bugreport.bangcle.com
 data-sdk-uuid-report.dreport.meituan.net
@@ -177,6 +174,9 @@ adashx.ut.youku.com
 audid.umeng.com
 h.cn-wulanchabu.log.aliyuncs.com
 aes-1.cn-wulanchabu.log.aliyuncs.com
+adashx4yt.m.taobao.com
+gj.track.uc.cn
+log.yolinkmob.com
 apmlog.snssdk.com
 cmonitor.iqiyi.com
 ping-monitor.shouji.sogou.com
