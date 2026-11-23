@@ -1,6 +1,6 @@
 {
  "name": "noir-phone tracker blocklist",
- "generatedAt": "2026-11-22T02:31:40.796Z",
+ "generatedAt": "2026-11-23T02:31:28.695Z",
  "device": "HONOR BKQ-AN20 / Android 17",
  "method": "APK dex + resources.arsc -> strings -> 域名分类（Verlintas/NOIR 规则）",
  "counts": {
@@ -106,11 +106,11 @@
    "apps": 5
   },
   {
-   "host": "cnlogs.umeng.com",
+   "host": "h-adashx.ut.taobao.com",
    "apps": 5
   },
   {
-   "host": "h-adashx.ut.taobao.com",
+   "host": "cnlogs.umeng.com",
    "apps": 5
   },
   {
