@@ -1,4 +1,4 @@
-# noir-phone tracker blocklist — 2026-11-24
+# noir-phone tracker blocklist — 2026-11-25
 0.0.0.0 metrics-drcn.dt.hihonorcloud.com
 0.0.0.0 cgi.qplus.com
 0.0.0.0 metrics-ad-drcn.dt.hihonorcloud.com
@@ -23,11 +23,11 @@
 0.0.0.0 rtlog.snssdk.com
 0.0.0.0 manual.sensorsdata.cn
 0.0.0.0 api.snssdk.com
-0.0.0.0 h-adashx.ut.taobao.com
 0.0.0.0 cnlogs.umeng.com
 0.0.0.0 abtest-ch.snssdk.com
 0.0.0.0 ad.zijieapi.com
 0.0.0.0 aweme.snssdk.com
+0.0.0.0 h-adashx.ut.taobao.com
 0.0.0.0 norma-external-collect.meizu.com
 0.0.0.0 alogsus.umeng.com
 0.0.0.0 alogus.umeng.com
@@ -107,7 +107,6 @@
 0.0.0.0 updatereport-dre.platform.hihonorcloud.com
 0.0.0.0 updatereport-drru.platform.hihonorcloud.com
 0.0.0.0 updatereport.platform.hihonorcloud.com
-0.0.0.0 aweme-lq.snssdk.com
 0.0.0.0 ad.oceanengine.com
 0.0.0.0 i-hl.snssdk.com
 0.0.0.0 imapi.snssdk.com
@@ -139,6 +138,7 @@
 0.0.0.0 toblog.volceapplog.com
 0.0.0.0 anti-sdk-report-pre.m.jd.com
 0.0.0.0 anti-sdk-report.m.jd.com
+0.0.0.0 aweme-lq.snssdk.com
 0.0.0.0 deeplink.umeng.com
 0.0.0.0 log.zijieapi.com
 0.0.0.0 rtlog.zijieapi.com
