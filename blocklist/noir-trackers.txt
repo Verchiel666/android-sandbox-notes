@@ -1,4 +1,4 @@
-! noir-phone tracker blocklist — 2026-11-24
+! noir-phone tracker blocklist — 2026-11-25
 ! 来源：本机 374 个安装包 / 222 个 TRACKER 域名中筛出 205 个
 ! 只含遥测/广告/崩溃上报域名；支付/登录/推送/验证码类已移到 noir-caution.txt
 ! 用法：AdGuard / AdGuard Home → 过滤器 → 自定义规则 → 粘贴本文件全部内容
@@ -26,11 +26,11 @@ rtapplog.snssdk.com
 rtlog.snssdk.com
 manual.sensorsdata.cn
 api.snssdk.com
-h-adashx.ut.taobao.com
 cnlogs.umeng.com
 abtest-ch.snssdk.com
 ad.zijieapi.com
 aweme.snssdk.com
+h-adashx.ut.taobao.com
 norma-external-collect.meizu.com
 alogsus.umeng.com
 alogus.umeng.com
@@ -110,7 +110,6 @@ updatereport-drcn.platform.hihonorcloud.com
 updatereport-dre.platform.hihonorcloud.com
 updatereport-drru.platform.hihonorcloud.com
 updatereport.platform.hihonorcloud.com
-aweme-lq.snssdk.com
 ad.oceanengine.com
 i-hl.snssdk.com
 imapi.snssdk.com
@@ -142,6 +141,7 @@ tobapplog.volceapplog.com
 toblog.volceapplog.com
 anti-sdk-report-pre.m.jd.com
 anti-sdk-report.m.jd.com
+aweme-lq.snssdk.com
 deeplink.umeng.com
 log.zijieapi.com
 rtlog.zijieapi.com
